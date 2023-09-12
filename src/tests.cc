@@ -17,17 +17,32 @@ TEST(ExportGraphToDot, aa) {
 
 TEST(ExportGraphToDot, ab) {
   Graph test_graph;
-  EXPECT_ANY_THROW(test_graph.LoadGraphFromFile("tests/examples/wrong_size.txt"););
+  EXPECT_ANY_THROW(test_graph.LoadGraphFromFile("tests/wrong_size.txt"););
 }
 
 TEST(ExportGraphToDot, ac) {
   Graph test_graph;
-  EXPECT_ANY_THROW(test_graph.LoadGraphFromFile("tests/examples/wrong_size_2.txt"););
+  EXPECT_ANY_THROW(test_graph.LoadGraphFromFile("tests/wrong_size_2.txt"););
 }
 
 TEST(ExportGraphToDot, ad) {
   Graph test_graph;
-  EXPECT_ANY_THROW(test_graph.LoadGraphFromFile("tests/examples/wrong_size_3.txt"););
+  EXPECT_ANY_THROW(test_graph.LoadGraphFromFile("tests/wrong_size_3.txt"););
+}
+
+TEST(ExportGraphToDot, ae) {
+  Graph test_graph;
+  EXPECT_ANY_THROW(test_graph.LoadGraphFromFile("tests/wrong_data_1.txt"););
+}
+
+TEST(ExportGraphToDot, af) {
+  Graph test_graph;
+  EXPECT_ANY_THROW(test_graph.LoadGraphFromFile("tests/wrong_data_2.txt"););
+}
+
+TEST(ExportGraphToDot, ag) {
+  Graph test_graph;
+  EXPECT_ANY_THROW(test_graph.LoadGraphFromFile("tests/wrong_data_3.txt"););
 }
 
 // TEST(ExportGraphToDot, UnweightedDirectedGraph) {

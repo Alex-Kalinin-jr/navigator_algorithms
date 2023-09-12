@@ -1,5 +1,5 @@
 CC=g++
-CXXFLAGS=-c -std=c++17 -Werror -Wall -Wextra -Wpedantic
+CXXFLAGS=-c -std=c++17 -Werror -Wall -Wextra -Wpedantic -g
 LDFLAGS=-lgtest -pthread
 TESTSRC=tests.cc
 
@@ -39,6 +39,6 @@ clean:
 	@rm -f $(TESTOBJ) $(SRCOBJ) $(LIBOBJ) $(LIBSTATIC) $(EXECUTABLE) $(EXECUTABLE_TEST)
 
 test: clean $(TESTOBJ) $(LIBSTATIC)
-	$(CC) $(TESTOBJ) $(LIBSTATIC) -o $(EXECUTABLE_TEST) $(LDFLAGS)
+	$(CC) $(TESTOBJ) $(LIBSTATIC) -g -o $(EXECUTABLE_TEST) $(LDFLAGS)
 	./$(EXECUTABLE_TEST)
 

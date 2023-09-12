@@ -52,7 +52,8 @@ vector<int> Graph::NeighborsFromEnd(int vertex) const {
 
 void Graph::LoadGraphFromFile(std::string filename) {
   std::ifstream file(filename);
-  if (!file) {
+  std::cout<<filename<<std::endl;
+  if (!file.is_open()) {
     throw "loadgraphfromfile: wrong file";
   }
 
