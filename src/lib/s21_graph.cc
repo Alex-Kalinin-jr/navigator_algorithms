@@ -62,10 +62,8 @@ void Graph::LoadGraphFromFile(std::string filename) {
   std::string buffStr;
   int vertexNumber = 0;
   std::getline(file, buffStr);
-  if (sscanf(buffStr.c_str(), "%d", &vertexNumber) != 1) {
-    throw "loadgraphfromfile: wrong file";
-  }
-  if (vertexNumber <= 0) {
+  if (sscanf(buffStr.c_str(), "%d", &vertexNumber) != 1 ||
+                                        vertexNumber <= 0) {
     throw "loadgraphfromfile: wrong file";
   }
 
@@ -98,6 +96,11 @@ void Graph::CheckCorrectness(vector<vector<int>> &vctr, int &size) const {
       throw "loadgraphfromfile: wrong file";
     }
   });
+  for (int i = 0; i < size; ++i) {
+    if (vctr[i][i] != 0) {
+      throw "loadgraphfromfile: wrong file";
+    }
+  }
 }
 
 void Graph::CheckLineCorrectness(std::string & buffLine) const {
