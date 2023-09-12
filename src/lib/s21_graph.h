@@ -11,7 +11,7 @@ using std::vector;
 
 class Graph {
  public:
-  explicit Graph(){};
+  Graph(){};
 
   void LoadGraphFromFile(std::string filename);
   void ExportGraphToDot(std::string filename) const;
