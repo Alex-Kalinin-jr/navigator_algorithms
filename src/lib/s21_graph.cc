@@ -14,7 +14,7 @@ int Graph::GetEdgeWeight(int i, int j) const { return adjacency_matrix_[i][j]; }
 
 int Graph::Size() const { return static_cast<int>(adjacency_matrix_.size()); }
 
-bool Graph::IsDirected() {
+bool Graph::IsDirected() const {
   for (int i = 0; i < Size(); ++i) {
     for (int j = i + 1; j < Size(); ++j) {
       if (adjacency_matrix_[i][j] != adjacency_matrix_[j][i]) {
@@ -97,7 +97,7 @@ void Graph::CheckLineCorrectness(std::string & buffLine) const {
   });
 }
 
-void Graph::ExportGraphToDot(std::string filename) {
+void Graph::ExportGraphToDot(std::string filename) const {
   std::ofstream file(filename);
   if (!file.is_open()) {
     throw "loadgraphfromfile: wrong file";
@@ -106,7 +106,7 @@ void Graph::ExportGraphToDot(std::string filename) {
   file.close();
 }
 
-void Graph::Export(std::ofstream &file, bool state) const {
+void Graph::Export(std::ofstream &file, const bool state) const {
   std::string link = (state) ? " -> " : " -- ";
   file << "digraph MyGraph {\n";
   for (int i = 0; i < Size(); ++i) {
@@ -127,5 +127,18 @@ void Graph::ExportEdgeWeight(std::ofstream &file, int i, int j) const {
   }
   file << ";\n";
 }
+
+  void Graph::PrintMatrix() const {
+    for (int i = 0; i < Size(); ++i) {
+      for (int j = 0; j < Size(); ++j) {
+        std::cout << adjacency_matrix_[i][j] << " ";
+      }
+      std::cout << std::endl;
+    }
+  }
+
+
+
+
 
 }  // namespace s21

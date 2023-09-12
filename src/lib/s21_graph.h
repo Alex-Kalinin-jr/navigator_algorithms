@@ -14,15 +14,8 @@ class Graph {
   explicit Graph(){};
 
   void LoadGraphFromFile(std::string filename);
-  void ExportGraphToDot(std::string filename);
-  void PrintMatrix() const {
-    for (int i = 0; i < Size(); ++i) {
-      for (int j = 0; j < Size(); ++j) {
-        std::cout << adjacency_matrix_[i][j] << " ";
-      }
-      std::cout << std::endl;
-    }
-  }
+  void ExportGraphToDot(std::string filename) const;
+  void PrintMatrix() const;
 
   int GetEdgeWeight(int i, int j) const;
   int Size() const;
@@ -30,13 +23,13 @@ class Graph {
   vector<int> NeighborsFromEnd(int vertex) const;
 
  private:
-  bool IsDirected();
+  bool IsDirected() const;
   void ExportEdgeWeight(std::ofstream &file, int i, int j) const;
-  void Export(std::ofstream &file, bool direction) const;
+  void Export(std::ofstream &file, const bool direction) const;
   void CheckCorrectness(vector<vector<int>> &vctr, int &size) const;
   void CheckLineCorrectness(std::string &) const;
 
-  vector<vector<int>> adjacency_matrix_ = {{0, 5, 4}, {5, 0, 2}, {4, 2, 0}};
+  vector<vector<int>> adjacency_matrix_;
 };
 
 }  // namespace s21
