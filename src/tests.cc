@@ -3,6 +3,7 @@
 #include "lib/s21_graph.h"
 // #include "lib/s21_graph_algorithms.h"
 #include "gtest/gtest.h"
+#include "lib/s21_stack.h"
 
 using s21::Graph;
 // using s21::GraphAlgorithms;
@@ -67,6 +68,55 @@ TEST(LoadGraphFromFile, WeightedDirectedGraph) {
       EXPECT_EQ(excepted[i][j], test_graph.GetEdgeWeight(i, j));
     }
 }
+
+TEST(stack, create) {
+  s21::Stack<int> a;
+  s21::Stack<int> b({1, 2, 3, 4});
+  s21::Stack<int>c(b);
+  s21::Stack<int>d;
+  d = c;
+  s21::Stack<int> e = s21::Stack<int>({1, 3, -5});
+  a = s21::Stack<int>(b);
+  s21::Stack<int>f(s21::Stack<int>({1, 2, 3}));
+  s21::Stack<int>g(s21::Stack<int>(b));
+}
+
+TEST(stack, operations) {
+  s21::Stack<int> a;
+  ASSERT_TRUE(a.empty());
+  for (int i = 0; i < 1000000; ++i) {
+    a.push(i);
+  }
+  ASSERT_EQ(a.top(), 999999);
+  ASSERT_EQ(a.size(), 1000000);
+}
+
+TEST(stack, operations2) {
+  s21::Stack<int> a {3, 4, 5};
+  ASSERT_FALSE(a.empty());
+  for (int i = 0; i < 1000000; ++i) {
+    a.push(i);
+  }
+  ASSERT_EQ(a.top(), 999999);
+  for (int i = 0; i < 50; ++i) {
+    a.pop();
+    ASSERT_EQ(a.top(), 999999 - i - 1);
+  }
+}
+
+TEST(stack, operations3) {
+  s21::Stack<int> a {3, 4, 5};
+  s21::Stack<int> b {2, 6, 8};
+  s21::Stack<int> c(a);
+  s21::Stack<int> d(b);
+  c.swap(b);
+  d.swap(a);
+  ASSERT_EQ(c.top(), 8);
+  ASSERT_EQ(d.top(), 5);
+}
+
+
+
 
 // TEST(DepthFirstSearchTest, UnweightedUndirectedGraph) {
 //   Graph test_graph;
