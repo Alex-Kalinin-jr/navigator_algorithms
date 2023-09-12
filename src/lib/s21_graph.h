@@ -17,17 +17,19 @@ class Graph {
   void ExportGraphToDot(std::string filename) const;
   void PrintMatrix() const;
 
-  int GetEdgeWeight(int i, int j) const;
+  int GetEdgeWeight(const int &i, const int &j) const;
   int Size() const;
-  vector<int> Neighbors(int vertex) const;
-  vector<int> NeighborsFromEnd(int vertex) const;
+  vector<int> Neighbors(const int &vertex) const;
+  vector<int> NeighborsFromEnd(const int &vertex) const;
 
  private:
   bool IsDirected() const;
-  void ExportEdgeWeight(std::ofstream &file, int i, int j) const;
+  void ExportEdgeWeight(std::ofstream &file, 
+                        const int &i, const int &j) const;
   void Export(std::ofstream &file, const bool direction) const;
-  void CheckCorrectness(vector<vector<int>> &vctr, int &size) const;
-  void CheckLineCorrectness(std::string &) const;
+  void CheckCorrectness(vector<vector<int>> &vctr, 
+                        const int &size) const;
+  void CheckLineCorrectness(const std::string &) const;
 
   vector<vector<int>> adjacency_matrix_;
 };

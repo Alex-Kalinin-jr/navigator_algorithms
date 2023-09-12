@@ -10,7 +10,9 @@
 
 namespace s21 {
 
-int Graph::GetEdgeWeight(int i, int j) const { return adjacency_matrix_[i][j]; }
+int Graph::GetEdgeWeight(const int &i, const int &j) const { 
+  return adjacency_matrix_[i][j];
+}
 
 int Graph::Size() const { return static_cast<int>(adjacency_matrix_.size()); }
 
@@ -25,7 +27,7 @@ bool Graph::IsDirected() const {
   return false;
 }
 
-vector<int> Graph::Neighbors(int vertex) const {
+vector<int> Graph::Neighbors(const int &vertex) const {
   vector<int> result;
   for (int i = 0; i < Size(); ++i) {
     if (adjacency_matrix_[vertex][i] > 0) {
@@ -35,7 +37,7 @@ vector<int> Graph::Neighbors(int vertex) const {
   return result;
 }
 
-vector<int> Graph::NeighborsFromEnd(int vertex) const {
+vector<int> Graph::NeighborsFromEnd(const int &vertex) const {
   vector<int> result;
   for (int i = Size() - 1; i >= 0; --i) {
     if (adjacency_matrix_[vertex][i] > 0) {
@@ -77,20 +79,21 @@ void Graph::LoadGraphFromFile(std::string filename) {
   adjacency_matrix_ = adjacencyMatrix;
 }
 
-void Graph::CheckCorrectness(vector<vector<int>> &vctr, int &size) const {
+void Graph::CheckCorrectness(vector<vector<int>> &vctr, 
+                            const int &size) const {
   std::size_t sz = static_cast<int>(size);
   if (vctr.size() != sz) {
     throw "loadgraphfromfile: wrong file";
   }
-  std::for_each(vctr.begin(), vctr.end(), [sz](vector<int> &row) {
+  std::for_each(vctr.begin(), vctr.end(), [sz](const vector<int> &row) {
     if (row.size() != sz) {
       throw "loadgraphfromfile: wrong file";
     }
   });
 }
 
-void Graph::CheckLineCorrectness(std::string & buffLine) const {
-  std::for_each(buffLine.begin(), buffLine.end(), [](char &a) {
+void Graph::CheckLineCorrectness(const std::string & buffLine) const {
+  std::for_each(buffLine.begin(), buffLine.end(), [](const char &a) {
     if (a != ' ' && a != '-' && (a > 57 || a < 48 )) {
       throw "loadgraphfromfile: wrong file";
     }
@@ -120,7 +123,8 @@ void Graph::Export(std::ofstream &file, const bool state) const {
   file << "}\n";
 }
 
-void Graph::ExportEdgeWeight(std::ofstream &file, int i, int j) const {
+void Graph::ExportEdgeWeight(std::ofstream &file, 
+                            const int &i, const int &j) const {
   if (adjacency_matrix_[i][j] > 0) {
     file << " [label=" << adjacency_matrix_[i][j]
          << "; weight=" << adjacency_matrix_[i][j] << ";]";
