@@ -11,14 +11,14 @@ using std::vector;
 
 class Graph {
  public:
-  Graph(){};
+  Graph() = default;
 
   void LoadGraphFromFile(std::string filename);
+
   void ExportGraphToDot(std::string filename) const;
   void PrintMatrix() const;
-
-  int GetEdgeWeight(const int &i, const int &j) const;
   int Size() const;
+  int GetEdgeWeight(const int &i, const int &j) const;
   vector<int> Neighbors(const int &vertex) const;
   vector<int> NeighborsFromEnd(const int &vertex) const;
 
