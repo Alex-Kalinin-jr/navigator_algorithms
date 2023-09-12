@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <exception>
 
 namespace s21 {
 
@@ -45,11 +46,14 @@ vector<int> Graph::NeighborsFromEnd(int vertex) const {
   return result;
 }
 
+
+
+
+
 void Graph::LoadGraphFromFile(std::string filename) {
   std::ifstream file(filename);
   if (!file) {
-    std::cerr << "Error: cannot open file " << filename << std::endl;
-    return;
+    throw "loadgraphfromfile: wrong file";
   }
 
   int vertex_number;
@@ -66,6 +70,12 @@ void Graph::LoadGraphFromFile(std::string filename) {
   adjacency_matrix_ = adjacency_matrix;
   file.close();
 }
+
+
+
+
+
+
 
 void Graph::ExportGraphToDot(std::string filename) {
   std::ofstream file;

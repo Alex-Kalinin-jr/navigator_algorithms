@@ -8,12 +8,27 @@ using s21::Graph;
 // using s21::GraphAlgorithms;
 using std::vector;
 
-// TEST(ExportGraphToDot, UnweightedUndirectedGraph) {
-//   Graph test_graph;
-//   test_graph.LoadGraphFromFile(
-//       "tests/examples/unweighted_undirected_graph.txt");
-//   test_graph.ExportGraphToDot("tests/unweighted_undirected_graph.dot");
-// }
+TEST(ExportGraphToDot, aa) {
+  Graph test_graph;
+  test_graph.LoadGraphFromFile(
+      "tests/examples/unweighted_undirected_graph.txt");
+  test_graph.ExportGraphToDot("tests/unweighted_undirected_graph.dot");
+}
+
+TEST(ExportGraphToDot, ab) {
+  Graph test_graph;
+  EXPECT_ANY_THROW(test_graph.LoadGraphFromFile("tests/examples/wrong_size.txt"););
+}
+
+TEST(ExportGraphToDot, ac) {
+  Graph test_graph;
+  EXPECT_ANY_THROW(test_graph.LoadGraphFromFile("tests/examples/wrong_size_2.txt"););
+}
+
+TEST(ExportGraphToDot, ad) {
+  Graph test_graph;
+  EXPECT_ANY_THROW(test_graph.LoadGraphFromFile("tests/examples/wrong_size_3.txt"););
+}
 
 // TEST(ExportGraphToDot, UnweightedDirectedGraph) {
 //   Graph test_graph;
