@@ -37,6 +37,7 @@ class Graph {
   void ExportEdgeWeight(std::ofstream &file, int i, int j);
 
   void CheckCorrectness(vector<vector<int>> &vctr, int &size) const;
+  void CheckLineCorrectness(std::string &) const;
 
   vector<vector<int>> adjacency_matrix_ = {{0, 5, 4}, {5, 0, 2}, {4, 2, 0}};
 };

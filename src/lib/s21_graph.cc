@@ -72,11 +72,7 @@ void Graph::LoadGraphFromFile(std::string filename) {
   vector<vector<int>> adjacencyMatrix;
   int buffVal = 0;
   while (std::getline(file, buffStr)) {
-    std::for_each(buffStr.begin(), buffStr.end(), [](char &a) {
-      if (a != ' ' && a != '-' && (a > 57 || a < 48 )) {
-        throw "loadgraphfromfile: wrong file";
-      }
-    });
+    CheckLineCorrectness(buffStr);
     std::istringstream stream(buffStr);
     std::vector<int> buffVectr;
     while (!stream.eof()) {
@@ -104,6 +100,13 @@ void Graph::CheckCorrectness(vector<vector<int>> &vctr, int &size) const {
   });
 }
 
+void Graph::CheckLineCorrectness(std::string & buffLine) const {
+  std::for_each(buffLine.begin(), buffLine.end(), [](char &a) {
+    if (a != ' ' && a != '-' && (a > 57 || a < 48 )) {
+      throw "loadgraphfromfile: wrong file";
+    }
+  });
+}
 
 void Graph::ExportGraphToDot(std::string filename) {
   std::ofstream file;
