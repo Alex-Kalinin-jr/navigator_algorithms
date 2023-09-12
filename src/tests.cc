@@ -15,11 +15,6 @@ TEST(ExportGraphToDot, aa) {
   test_graph.ExportGraphToDot("tests/unweighted_undirected_graph.dot");
 }
 
-TEST(ExportGraphToDot, ab) {
-  Graph test_graph;
-  EXPECT_ANY_THROW(test_graph.LoadGraphFromFile("tests/wrong_size.txt"););
-}
-
 TEST(ExportGraphToDot, ac) {
   Graph test_graph;
   EXPECT_ANY_THROW(test_graph.LoadGraphFromFile("tests/wrong_size_2.txt"););

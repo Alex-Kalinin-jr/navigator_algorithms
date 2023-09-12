@@ -4,6 +4,9 @@
 #include <iostream>
 #include <vector>
 #include <exception>
+#include <algorithm>
+#include <string>
+#include <sstream>
 
 namespace s21 {
 
@@ -52,30 +55,54 @@ vector<int> Graph::NeighborsFromEnd(int vertex) const {
 
 void Graph::LoadGraphFromFile(std::string filename) {
   std::ifstream file(filename);
-  std::cout<<filename<<std::endl;
   if (!file.is_open()) {
     throw "loadgraphfromfile: wrong file";
   }
 
-  int vertex_number;
-  file >> vertex_number;
-
-  vector<vector<int>> adjacency_matrix(vertex_number,
-                                       vector<int>(vertex_number));
-  for (int i = 0; i < vertex_number; ++i) {
-    for (int j = 0; j < vertex_number; ++j) {
-      file >> adjacency_matrix[i][j];
-    }
+  std::string buffStr;
+  int vertexNumber = 0;
+  std::getline(file, buffStr);
+  if (sscanf(buffStr.c_str(), "%d", &vertexNumber) != 1) {
+    throw "loadgraphfromfile: wrong file";
+  }
+  if (vertexNumber <= 0) {
+    throw "loadgraphfromfile: wrong file";
   }
 
-  adjacency_matrix_ = adjacency_matrix;
+  vector<vector<int>> adjacencyMatrix;
+  int buffVal = 0;
+  while (std::getline(file, buffStr)) {
+    std::for_each(buffStr.begin(), buffStr.end(), [](char &a) {
+      if (a != ' ' && a != '-' && (a > 57 || a < 48 )) {
+        throw "loadgraphfromfile: wrong file";
+      }
+    });
+    std::istringstream stream(buffStr);
+    std::vector<int> buffVectr;
+    while (!stream.eof()) {
+      stream >> buffVal;
+      buffVectr.push_back(buffVal);
+    }
+    adjacencyMatrix.push_back(buffVectr);
+  }
   file.close();
+
+  CheckCorrectness(adjacencyMatrix, vertexNumber);
+  adjacency_matrix_ = adjacencyMatrix;
 }
 
 
-
-
-
+void Graph::CheckCorrectness(vector<vector<int>> &vctr, int &size) const {
+  std::size_t sz = static_cast<int>(size);
+  if (vctr.size() != sz) {
+    throw "loadgraphfromfile: wrong file";
+  }
+  std::for_each(vctr.begin(), vctr.end(), [sz](vector<int> &row) {
+    if (row.size() != sz) {
+      throw "loadgraphfromfile: wrong file";
+    }
+  });
+}
 
 
 void Graph::ExportGraphToDot(std::string filename) {

@@ -1,5 +1,5 @@
 CC=g++
-CXXFLAGS=-c -std=c++17 -Werror -Wall -Wextra -Wpedantic -g
+CXXFLAGS=-c -std=c++17 -Werror -Wall -Wextra -Wpedantic -g -O0
 LDFLAGS=-lgtest -pthread
 TESTSRC=tests.cc
 
