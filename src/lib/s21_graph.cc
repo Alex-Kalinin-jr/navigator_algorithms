@@ -2,11 +2,11 @@
 
 #include <fstream>
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <vector>
 #include <exception>
 #include <algorithm>
-#include <string>
-#include <sstream>
 
 namespace s21 {
 
@@ -111,7 +111,7 @@ void Graph::ExportGraphToDot(std::string filename) const {
 
 void Graph::Export(std::ofstream &file, const bool state) const {
   std::string link = (state) ? " -> " : " -- ";
-  file << "digraph MyGraph {\n";
+  file << "digraph MyGraph {" << std::endl;
   for (int i = 0; i < Size(); ++i) {
     for (int j = 0; j < Size(); ++j) {
       if (adjacency_matrix_[i][j] > 0) {
@@ -120,7 +120,7 @@ void Graph::Export(std::ofstream &file, const bool state) const {
       }
     }
   }
-  file << "}\n";
+  file << "}" << std::endl;
 }
 
 void Graph::ExportEdgeWeight(std::ofstream &file, 
@@ -129,20 +129,17 @@ void Graph::ExportEdgeWeight(std::ofstream &file,
     file << " [label=" << adjacency_matrix_[i][j]
          << "; weight=" << adjacency_matrix_[i][j] << ";]";
   }
-  file << ";\n";
+  file << ";" << std::endl;
 }
 
-  void Graph::PrintMatrix() const {
-    for (int i = 0; i < Size(); ++i) {
-      for (int j = 0; j < Size(); ++j) {
-        std::cout << adjacency_matrix_[i][j] << " ";
-      }
-      std::cout << std::endl;
+void Graph::PrintMatrix() const {
+  for (int i = 0; i < Size(); ++i) {
+    for (int j = 0; j < Size(); ++j) {
+      std::cout << adjacency_matrix_[i][j] << " ";
     }
+    std::cout << std::endl;
   }
-
-
-
-
+  std::cout << std::endl;
+}
 
 }  // namespace s21
