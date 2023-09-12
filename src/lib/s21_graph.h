@@ -17,7 +17,7 @@ class Graph {
   void ExportGraphToDot(std::string filename);
   void PrintMatrix() const {
     for (int i = 0; i < Size(); ++i) {
-      for (int j = 0; j < Size(i); ++j) {
+      for (int j = 0; j < Size(); ++j) {
         std::cout << adjacency_matrix_[i][j] << " ";
       }
       std::cout << std::endl;
@@ -31,11 +31,8 @@ class Graph {
 
  private:
   bool IsDirected();
-  int Size(int i) const;
-  void ExportDirected(std::ofstream &file);
-  void ExportUndirected(std::ofstream &file);
-  void ExportEdgeWeight(std::ofstream &file, int i, int j);
-
+  void ExportEdgeWeight(std::ofstream &file, int i, int j) const;
+  void Export(std::ofstream &file, bool direction) const;
   void CheckCorrectness(vector<vector<int>> &vctr, int &size) const;
   void CheckLineCorrectness(std::string &) const;
 

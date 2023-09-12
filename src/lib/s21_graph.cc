@@ -14,13 +14,9 @@ int Graph::GetEdgeWeight(int i, int j) const { return adjacency_matrix_[i][j]; }
 
 int Graph::Size() const { return static_cast<int>(adjacency_matrix_.size()); }
 
-int Graph::Size(int i) const {
-  return static_cast<int>(adjacency_matrix_[i].size());
-}
-
 bool Graph::IsDirected() {
   for (int i = 0; i < Size(); ++i) {
-    for (int j = i + 1; j < Size(i); ++j) {
+    for (int j = i + 1; j < Size(); ++j) {
       if (adjacency_matrix_[i][j] != adjacency_matrix_[j][i]) {
         return true;
       }
@@ -48,10 +44,6 @@ vector<int> Graph::NeighborsFromEnd(int vertex) const {
   }
   return result;
 }
-
-
-
-
 
 void Graph::LoadGraphFromFile(std::string filename) {
   std::ifstream file(filename);
@@ -85,7 +77,6 @@ void Graph::LoadGraphFromFile(std::string filename) {
   adjacency_matrix_ = adjacencyMatrix;
 }
 
-
 void Graph::CheckCorrectness(vector<vector<int>> &vctr, int &size) const {
   std::size_t sz = static_cast<int>(size);
   if (vctr.size() != sz) {
@@ -96,11 +87,6 @@ void Graph::CheckCorrectness(vector<vector<int>> &vctr, int &size) const {
       throw "loadgraphfromfile: wrong file";
     }
   });
-  for (int i = 0; i < size; ++i) {
-    if (vctr[i][i] != 0) {
-      throw "loadgraphfromfile: wrong file";
-    }
-  }
 }
 
 void Graph::CheckLineCorrectness(std::string & buffLine) const {
@@ -112,48 +98,29 @@ void Graph::CheckLineCorrectness(std::string & buffLine) const {
 }
 
 void Graph::ExportGraphToDot(std::string filename) {
-  std::ofstream file;
-  file.open(filename);
+  std::ofstream file(filename);
   if (!file.is_open()) {
-    std::cerr << "Error: cannot write file " << filename << std::endl;
+    throw "loadgraphfromfile: wrong file";
   }
-
-  if (IsDirected()) {
-    ExportDirected(file);
-  } else {
-    ExportUndirected(file);
-  }
-  file << "}\n";
+  Export(file, IsDirected());
   file.close();
-
-  std::cout << "calling ExportGraphToDot function\n";
 }
 
-void Graph::ExportDirected(std::ofstream &file) {
+void Graph::Export(std::ofstream &file, bool state) const {
+  std::string link = (state) ? " -> " : " -- ";
   file << "digraph MyGraph {\n";
   for (int i = 0; i < Size(); ++i) {
-    for (int j = 0; j < Size(i); ++j) {
+    for (int j = 0; j < Size(); ++j) {
       if (adjacency_matrix_[i][j] > 0) {
-        file << "  " << i << " -> " << j;
+        file << "  " << i << link << j;
         ExportEdgeWeight(file, i, j);
       }
     }
   }
+  file << "}\n";
 }
 
-void Graph::ExportUndirected(std::ofstream &file) {
-  file << "graph MyGraph {\n";
-  for (int i = 0; i < Size(); ++i) {
-    for (int j = i + 1; j < Size(i); ++j) {
-      if (adjacency_matrix_[i][j] > 0) {
-        file << "  " << i << " -- " << j;
-        ExportEdgeWeight(file, i, j);
-      }
-    }
-  }
-}
-
-void Graph::ExportEdgeWeight(std::ofstream &file, int i, int j) {
+void Graph::ExportEdgeWeight(std::ofstream &file, int i, int j) const {
   if (adjacency_matrix_[i][j] > 0) {
     file << " [label=" << adjacency_matrix_[i][j]
          << "; weight=" << adjacency_matrix_[i][j] << ";]";
