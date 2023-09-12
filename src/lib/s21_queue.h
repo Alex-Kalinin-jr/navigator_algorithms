@@ -18,21 +18,28 @@ class Queue {
   explicit Queue(std::initializer_list<value_type> const& items)
       : cont_(Container(items)) {}
   Queue(const Queue& src) : cont_(src.cont_) {}
-  Queue(Queue&& src) { MoveHelper(src); }
-  ~Queue() { cont_.clear(); }
-  auto operator=(Queue&& q) {
-    MoveHelper(q);
+  Queue(Queue&& src) { cont_ = std::move(src.cont_); }
+  auto operator=(Queue&& src) {
+    cont_ = std::move(src.cont_);
     return *this;
   }
+  Queue &operator=(const Queue& src) {
+    if (this != &src) {
+      cont_ = src.cont_;
+    }
+    return *this;
+  }
+  ~Queue() { cont_.clear(); }
 
-  const_reference front() { return cont_.front(); }
-  const_reference back() { return cont_.back(); }
-  bool empty() { return cont_.empty(); }
-  size_type size() { return cont_.size(); }
+  const_reference back() const { return cont_.back(); }
+  const_reference front() const { return cont_.front(); }
+  bool empty() const { return cont_.empty(); }
+  size_type size() const { return cont_.size(); } 
   void push(const_reference value) { cont_.push_back(value); }
   void pop() { cont_.pop_front(); }
   void swap(Queue& other) { cont_.swap(other.cont_); }
 
+// is not tested
   template <class... Args>
   void emplace_back(Args&&... args) {
     cont_.emplace_back(args...);
@@ -40,13 +47,6 @@ class Queue {
 
  private:
   Container cont_;
-
-  void MoveHelper(Queue& src) {
-    if (&cont_ != &(src.cont_)) {
-      cont_ = src.cont_;
-      src.cont_.clear();
-    }
-  }
 };
 
 }  // namespace s21

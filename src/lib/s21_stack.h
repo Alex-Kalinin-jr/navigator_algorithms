@@ -40,12 +40,12 @@ class Stack {
   size_type size() const { return cont_.size(); }
   void push(const_reference value) { cont_.push_back(value); }
   void pop() { cont_.pop_back(); }
-
-
   void swap(Stack& other) { cont_.swap(other.cont_); }
 
+
+// is not tested
   template <class... Args>
-  void push_range(Args&&... args) {
+  void emplace_front(Args&&... args) {
     cont_.emplace_back(args...);
   }
 

@@ -4,6 +4,7 @@
 // #include "lib/s21_graph_algorithms.h"
 #include "gtest/gtest.h"
 #include "lib/s21_stack.h"
+#include "lib/s21_queue.h"
 
 using s21::Graph;
 // using s21::GraphAlgorithms;
@@ -115,6 +116,53 @@ TEST(stack, operations3) {
   ASSERT_EQ(d.top(), 5);
 }
 
+TEST(queue, create) {
+  s21::Queue<int> a;
+  s21::Queue<int> b({1, 2, 3, 4});
+  s21::Queue<int>c(b);
+  s21::Queue<int>d;
+  d = c;
+  s21::Queue<int> e = s21::Queue<int>({1, 3, -5});
+  a = s21::Queue<int>(b);
+  s21::Queue<int>f(s21::Queue<int>({1, 2, 3}));
+  s21::Queue<int>g(s21::Queue<int>(b));
+}
+
+TEST(queue, operations) {
+  s21::Queue<int> a;
+  ASSERT_TRUE(a.empty());
+  for (int i = 0; i < 1000000; ++i) {
+    a.push(i);
+  }
+  ASSERT_EQ(a.back(), 999999);
+  ASSERT_EQ(a.size(), 1000000);
+  ASSERT_EQ(a.front(), 0);
+}
+
+TEST(queue, operations2) {
+  s21::Queue<int> a;
+  for (int i = 0; i < 1000000; ++i) {
+    a.push(i);
+  }
+  ASSERT_EQ(a.back(), 999999);
+
+  for (int i = 0; i < 50; ++i) {
+    a.pop();
+    ASSERT_EQ(a.back(), 999999);
+    ASSERT_EQ(a.front(), 0 + i + 1);
+  }
+}
+
+TEST(queue, operations3) {
+  s21::Queue<int> a {3, 4, 5};
+  s21::Queue<int> b {2, 6, 8};
+  s21::Queue<int> c(a);
+  s21::Queue<int> d(b);
+  c.swap(b);
+  d.swap(a);
+  ASSERT_EQ(c.back(), 8);
+  ASSERT_EQ(d.back(), 5);
+}
 
 
 
