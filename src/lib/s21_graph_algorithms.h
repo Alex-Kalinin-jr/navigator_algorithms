@@ -14,7 +14,7 @@ namespace s21 {
 using std::vector;
 
 const int kNumAnts = 100;
-const int kNumIterations = 1150; // reliability factor = 1.(15)
+const int kNumIterations = 15000;
 const double kAlpha = 1.0;
 const double kBeta = 2.0;
 const double kRHO = 0.5;
