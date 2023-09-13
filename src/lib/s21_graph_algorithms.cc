@@ -6,6 +6,8 @@
 #include <iostream>
 #include <numeric>
 #include <vector>
+#include <random>
+#include <functional>
 
 namespace s21 {
 
@@ -209,7 +211,12 @@ void GraphAlgorithms::UpdatePheromone(vector<vector<double>> &pheromone,
   }
 }
 
-double GraphAlgorithms::Random() { return (double)rand() / RAND_MAX; }
+double GraphAlgorithms::Random() { 
+  std::random_device rd;
+  std::default_random_engine engine(rd());
+  auto gen = std::bind(std::uniform_real_distribution<>(0, 1), engine);
+  return static_cast<double>(gen());
+}
 
 int GraphAlgorithms::SelectNext(int current, const vector<bool> &visited,
                                 const vector<vector<double>> &pheromone,
@@ -269,7 +276,7 @@ TsmResult GraphAlgorithms::SolveTravelingSalesmanProblem(const Graph &graph) {
       int start = rand() % (n - 1);
       std::vector<bool> visited(n, false);
       ants[k] = BuildTour(start, visited, pheromone, graph);
-      if (ants[k].distance < best_result.distance) {
+      if (ants[k].distance <= best_result.distance) {
         best_result = ants[k];
       }
     }
