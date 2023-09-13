@@ -39,9 +39,9 @@ class GraphAlgorithms {
   static vector<int> DepthFirstSearch(const Graph &graph, const int start);
   static vector<int> BreadthFirstSearch(const Graph &graph, const int start);
 
-  // // Part2
-  // static int GetShortestPathBetweenVertices(const Graph &graph, int vertex1,
-  //                                           int vertex2);
+  // Part2
+  static int GetShortestPathBetweenVertices(const Graph &graph, const int vertex1,
+                                            const int vertex2);
   // static vector<vector<int>> GetShortestPathsBetweenAllVertices(
   //     const Graph &graph);
 

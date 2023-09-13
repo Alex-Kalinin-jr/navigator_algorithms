@@ -79,35 +79,34 @@ vector<int> GraphAlgorithms::BreadthFirstSearch(const Graph &graph,
   return traversed;
 }
 
-// int GraphAlgorithms::GetShortestPathBetweenVertices(const Graph &graph,
-//                                                     int vertex1, int vertex2) {
-//   vector<int> distance(graph.Size(), kInf);
-//   vector<bool> visited(graph.Size(), false);
-//   Queue<int> vertex_queue;
+int GraphAlgorithms::GetShortestPathBetweenVertices(const Graph &graph,
+                                                    const int vertex1, const int vertex2) {
+  vector<int> distance(graph.Size(), kInf);
+  vector<bool> visited(graph.Size(), false);
+  Queue<int> vertex_queue;
 
-//   distance[vertex1 - 1] = 0;
-//   vertex_queue.push(vertex1 - 1);
+  distance[vertex1 - 1] = 0;
+  vertex_queue.push(vertex1 - 1);
 
-//   while (!vertex_queue.empty()) {
-//     int i = vertex_queue.front();
-//     vertex_queue.pop();
+  while (!vertex_queue.empty()) {
+    int i = vertex_queue.front();
+    vertex_queue.pop();
 
-//     if (visited[i]) {
-//       continue;
-//     }
+    if (visited[i]) {
+      continue;
+    }
+    visited[i] = true;
 
-//     visited[i] = true;
-
-//     for (int j : graph.Neighbors(i)) {
-//       int new_distance = distance[i] + graph.GetEdgeWeight(i, j);
-//       if (new_distance < distance[j]) {
-//         distance[j] = new_distance;
-//         vertex_queue.push(j);
-//       }
-//     }
-//   }
-//   return distance[vertex2 - 1];
-// }
+    for (int j : graph.Neighbors(i)) {
+      int new_distance = distance[i] + graph.GetEdgeWeight(i, j);
+      if (new_distance < distance[j]) {
+        distance[j] = new_distance;
+        vertex_queue.push(j);
+      }
+    }
+  }
+  return distance[vertex2 - 1];
+}
 
 // vector<vector<int>> GraphAlgorithms::GetShortestPathsBetweenAllVertices(
 //     const Graph &graph) {

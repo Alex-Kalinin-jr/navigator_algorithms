@@ -271,15 +271,24 @@ TEST(BreadthFirstSearch, wug1) {
   ASSERT_TRUE(CompareVectorsContent(expected, actual));
 }
 
+TEST(GetShortestPathBetweenVertices, UnweightedDirectedGraph) {
+  Graph graph;
+  graph.LoadGraphFromFile("tests/examples/unweighted_directed_graph.txt");
 
+  EXPECT_EQ(GraphAlgorithms::GetShortestPathBetweenVertices(graph, 1, 3), 3);
+}
 
+TEST(GetShortestPathBetweenVertices, dwg) {
+  Graph graph;
+  graph.LoadGraphFromFile("tests/examples/dwg.txt");
+  EXPECT_EQ(GraphAlgorithms::GetShortestPathBetweenVertices(graph, 1, 4), 3);
+}
 
-// TEST(GetShortestPathBetweenVertices, UnweightedDirectedGraph) {
-//   Graph graph;
-//   graph.LoadGraphFromFile("tests/examples/unweighted_directed_graph.txt");
-
-//   EXPECT_EQ(GraphAlgorithms::GetShortestPathBetweenVertices(graph, 1, 3), 3);
-// }
+TEST(GetShortestPathBetweenVertices, dwg2) {
+  Graph graph;
+  graph.LoadGraphFromFile("tests/examples/dwg2.txt");
+  EXPECT_EQ(GraphAlgorithms::GetShortestPathBetweenVertices(graph, 1, 4), 2);
+}
 
 // TEST(GetShortestPathsBetweenAllVertices, UnweightedDirectedGraph) {
 //   Graph graph;
