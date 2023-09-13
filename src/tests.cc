@@ -326,16 +326,6 @@ TEST(SolveTravelingSalesmanProblem, WeightedUndirectedGraph) {
   EXPECT_EQ(result.vertices, expected.vertices);
 }
 
-// // _SC_THREAD_ATTR_STACKADDR
-// // dfjhjd
-// // dkfjd
-// dkfjd
-// GTEST_FLAG_PREFIX_fgf
-// gf
-// g
-// fg
-// f
-
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
