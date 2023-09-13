@@ -315,32 +315,32 @@ TEST(GetShortestPathsBetweenAllVertices, uug) {
   ASSERT_EQ(actual[0][4], 11);
 }
 
-// TEST(GetLeastSpanningTree, UnweightedDirectedGraph) {
-//   Graph graph;
-//   graph.LoadGraphFromFile("tests/examples/unweighted_directed_graph.txt");
-//   vector<vector<int>> expected_result = {{0, 1, 0, 1, 0},
-//                                          {1, 0, 0, 0, 0},
-//                                          {0, 0, 0, 0, 0},
-//                                          {1, 0, 0, 0, 1},
-//                                          {0, 0, 0, 1, 0}};
+TEST(GetLeastSpanningTree, UnweightedDirectedGraph) {
+  Graph graph;
+  graph.LoadGraphFromFile("tests/examples/unweighted_directed_graph.txt");
+  vector<vector<int>> expected_result = {{0, 1, 0, 1, 0},
+                                         {1, 0, 0, 0, 0},
+                                         {0, 0, 0, 0, 0},
+                                         {1, 0, 0, 0, 1},
+                                         {0, 0, 0, 1, 0}};
 
-//   vector<vector<int>> actual_result =
-//       GraphAlgorithms::GetLeastSpanningTree(graph);
+  vector<vector<int>> actual_result =
+      GraphAlgorithms::GetLeastSpanningTree(graph);
 
-//   EXPECT_EQ(actual_result, expected_result);
-// }
+  EXPECT_EQ(actual_result, expected_result);
+}
 
-// TEST(SolveTravelingSalesmanProblem, WeightedUndirectedGraph) {
-//   Graph test_graph;
-//   s21::TsmResult result;
-//   test_graph.LoadGraphFromFile("tests/examples/weighted_undirected_graph.txt");
-//   result = GraphAlgorithms::SolveTravelingSalesmanProblem(test_graph);
+TEST(SolveTravelingSalesmanProblem, WeightedUndirectedGraph) {
+  Graph test_graph;
+  s21::TsmResult result;
+  test_graph.LoadGraphFromFile("tests/examples/weighted_undirected_graph.txt");
+  result = GraphAlgorithms::SolveTravelingSalesmanProblem(test_graph);
 
-//   s21::TsmResult expected = {{1, 8, 5, 4, 10, 6, 3, 7, 2, 2, 11, 9}, 253};
+  s21::TsmResult expected = {{1, 8, 5, 4, 10, 6, 3, 7, 2, 2, 11, 9}, 253};
 
-//   EXPECT_EQ(result.distance, expected.distance);
-//   EXPECT_EQ(result.vertices, expected.vertices);
-// }
+  EXPECT_EQ(result.distance, expected.distance);
+  EXPECT_EQ(result.vertices, expected.vertices);
+}
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

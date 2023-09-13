@@ -29,7 +29,7 @@ struct TsmResult {
 
 struct Ant {
   vector<int> path;
-  vector<bool> visited;
+  vector<bool> visiteегd;
   double path_length;
 };
 
@@ -46,24 +46,24 @@ class GraphAlgorithms {
       const Graph &graph);
 
   // // Part3
-  // static vector<vector<int>> GetLeastSpanningTree(const Graph &graph);
+  static vector<vector<int>> GetLeastSpanningTree(const Graph &graph);
 
-  // // Part4
-  // static TsmResult SolveTravelingSalesmanProblem(const Graph &graph);
-  // //
-  // static double Distance(int i, int j, const Graph &graph);
-  // static double Eta(int i, int j, const Graph &graph);
-  // static vector<vector<double>> InitializePheromone(int n);
-  // static void UpdatePheromone(vector<vector<double>> &pheromone,
-  //                             const vector<TsmResult> &ants);
+  // Part4
+  static TsmResult SolveTravelingSalesmanProblem(const Graph &graph);
+  //
+  static double Distance(int i, int j, const Graph &graph);
+  static double Eta(int i, int j, const Graph &graph);
+  static vector<vector<double>> InitializePheromone(int n);
+  static void UpdatePheromone(vector<vector<double>> &pheromone,
+                              const vector<TsmResult> &ants);
 
-  // static int SelectNext(int current, const vector<bool> &visited,
-  //                       const vector<vector<double>> &pheromone,
-  //                       const Graph &graph);
-  // static TsmResult BuildTour(int start, vector<bool> &visited,
-  //                            const vector<vector<double>> &pheromone,
-  //                            const Graph &graph);
-  // static double Random();
+  static int SelectNext(int current, const vector<bool> &visited,
+                        const vector<vector<double>> &pheromone,
+                        const Graph &graph);
+  static TsmResult BuildTour(int start, vector<bool> &visited,
+                             const vector<vector<double>> &pheromone,
+                             const Graph &graph);
+  static double Random();
 };
 
 }  // namespace s21
