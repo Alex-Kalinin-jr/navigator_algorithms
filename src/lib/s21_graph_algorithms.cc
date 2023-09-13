@@ -266,14 +266,16 @@ TsmResult GraphAlgorithms::BuildTour(int start, vector<bool> &visited,
 
 TsmResult GraphAlgorithms::SolveTravelingSalesmanProblem(const Graph &graph) {
   int n = graph.Size();
-  std::cout << n;
   vector<vector<double>> pheromone = InitializePheromone(n);
   TsmResult best_result;
   best_result.distance = std::numeric_limits<double>::max();
+  std::random_device rd;
+  std::default_random_engine engine(rd());
+  auto gen = std::bind(std::uniform_int_distribution<>(0, n - 2), engine);
   for (int iter = 0; iter < kNumIterations; iter++) {
     std::vector<TsmResult> ants(kNumAnts);
     for (int k = 0; k < kNumAnts; k++) {
-      int start = rand() % (n - 1);
+      int start = gen();
       std::vector<bool> visited(n, false);
       ants[k] = BuildTour(start, visited, pheromone, graph);
       if (ants[k].distance <= best_result.distance) {
