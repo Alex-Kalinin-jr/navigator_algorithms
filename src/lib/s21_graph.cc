@@ -92,7 +92,7 @@ void Graph::CheckCorrectness(vector<vector<int>> &vctr, const int &size) const {
 
 void Graph::CheckLineCorrectness(const std::string &buffLine) const {
   std::for_each(buffLine.begin(), buffLine.end(), [](const char &a) {
-    if (a != ' ' && a != '-' && (a > 57 || a < 48)) {
+    if (a != ' ' && a != 9 && a != '-' && (a > 57 || a < 48)) {
       throw "loadgraphfromfile: wrong file";
     }
   });

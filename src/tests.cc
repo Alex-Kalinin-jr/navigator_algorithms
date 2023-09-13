@@ -325,9 +325,32 @@ TEST(SolveTravelingSalesmanProblem, WeightedUndirectedGraph) {
   EXPECT_EQ(result.distance, expected.distance);
   EXPECT_EQ(result.vertices, expected.vertices);
 }
-// dfldkf
-// dkfdk
-// dfjdk
+
+TEST(SolveTravelingSalesmanProblem, wug2) {
+  Graph test_graph;
+  s21::TsmResult result;
+  test_graph.LoadGraphFromFile("tests/examples/wug2.txt");
+  result = GraphAlgorithms::SolveTravelingSalesmanProblem(test_graph);
+
+  s21::TsmResult expected = {{1, 3, 4, 2, 1}, 80};
+
+  EXPECT_EQ(result.distance, expected.distance);
+  EXPECT_EQ(result.vertices, expected.vertices);
+}
+
+TEST(SolveTravelingSalesmanProblem, wug3) {
+  Graph test_graph;
+  s21::TsmResult result;
+  test_graph.LoadGraphFromFile("tests/examples/wug3.txt");
+  result = GraphAlgorithms::SolveTravelingSalesmanProblem(test_graph);
+
+  s21::TsmResult expected = {{1, 5, 4, 3, 2, 1}, 99};
+
+  EXPECT_EQ(result.distance, expected.distance);
+  EXPECT_EQ(result.vertices, expected.vertices);
+}
+
+
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

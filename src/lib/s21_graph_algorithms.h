@@ -29,7 +29,7 @@ struct TsmResult {
 
 struct Ant {
   vector<int> path;
-  vector<bool> visiteегd;
+  // vector<bool> visited;
   double path_length;
 };
 
