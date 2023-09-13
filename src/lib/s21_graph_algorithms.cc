@@ -11,11 +11,11 @@ namespace s21 {
 
 vector<int> GraphAlgorithms::DepthFirstSearch(const Graph &graph,
                                               const int startVertex) {
-  if (startVertex >=graph.Size()) {
+  if (startVertex >= graph.Size()) {
     throw "invalid argument";
   }
   vector<bool> visited(graph.Size(), false);
-  vector<int> traversedVertices;
+  vector<int> traversed;
   Stack<int> vertexStack;
 
   vertexStack.push(startVertex);
@@ -26,7 +26,7 @@ vector<int> GraphAlgorithms::DepthFirstSearch(const Graph &graph,
 
     if (!visited[vertex]) {
       visited[vertex] = true;
-      traversedVertices.push_back(vertex);
+      traversed.push_back(vertex);
 
       for (int neighbor : graph.NeighborsFromEnd(vertex)) {
         if (!visited[neighbor]) {
@@ -36,57 +36,48 @@ vector<int> GraphAlgorithms::DepthFirstSearch(const Graph &graph,
     }
   }
 
-  std::transform(traversedVertices.begin(), traversedVertices.end(),
-                 traversedVertices.begin(), [](int &vertice) -> int {
+  std::transform(traversed.begin(), traversed.end(),
+                 traversed.begin(), [](int &vertice) -> int {
                    ++vertice;
                    return vertice;
                  });
-  return traversedVertices;
+  return traversed;
 }
 
 
+vector<int> GraphAlgorithms::BreadthFirstSearch(const Graph &graph,
+                                                int start) {
+  if (start >= graph.Size()) {
+    throw "invalid argument";
+  }
+  vector<bool> visited(graph.Size(), false);
+  vector<int> traversed;
 
+  Queue<int> vertex_queue;
+  vertex_queue.push(start);
 
+  while (!vertex_queue.empty()) {
+    int vertex = vertex_queue.front();
+    vertex_queue.pop();
 
+    if (!visited[vertex]) {
+      visited[vertex] = true;
+      traversed.push_back(vertex);
 
-
-
-
-
-
-
-
-
-// vector<int> GraphAlgorithms::BreadthFirstSearch(const Graph &graph,
-//                                                 int start_vertex) {
-//   vector<bool> visited(graph.Size(), false);
-//   vector<int> traversed_vertices;
-
-//   Queue<int> vertex_queue;
-//   vertex_queue.push(start_vertex);
-
-//   while (!vertex_queue.empty()) {
-//     int vertex = vertex_queue.front();
-//     vertex_queue.pop();
-
-//     if (!visited[vertex]) {
-//       visited[vertex] = true;
-//       traversed_vertices.push_back(vertex);
-
-//       for (int neighbor : graph.Neighbors(vertex)) {
-//         if (!visited[neighbor]) {
-//           vertex_queue.push(neighbor);
-//         }
-//       }
-//     }
-//   }
-//   std::transform(traversed_vertices.begin(), traversed_vertices.end(),
-//                  traversed_vertices.begin(), [](int &vertice) -> int {
-//                    ++vertice;
-//                    return vertice;
-//                  });
-//   return traversed_vertices;
-// }
+      for (int neighbor : graph.Neighbors(vertex)) {
+        if (!visited[neighbor]) {
+          vertex_queue.push(neighbor);
+        }
+      }
+    }
+  }
+  std::transform(traversed.begin(), traversed.end(),
+                 traversed.begin(), [](int &vertice) -> int {
+                   ++vertice;
+                   return vertice;
+                 });
+  return traversed;
+}
 
 // int GraphAlgorithms::GetShortestPathBetweenVertices(const Graph &graph,
 //                                                     int vertex1, int vertex2) {

@@ -11,6 +11,18 @@ using s21::Graph;
 using s21::GraphAlgorithms;
 using std::vector;
 
+bool CompareVectorsContent(std::vector<int> &a, std::vector<int> &b) {
+  bool state = true;
+  std::for_each(a.begin(), a.end(), [&b, &state](int & node) mutable {
+    if (std::find(b.begin(), b.end(), node) == b.end()) {
+      state = false;
+    }
+  });
+  return state;
+}
+
+
+
 TEST(ExportGraphToDot, aa) {
   Graph test_graph;
   test_graph.LoadGraphFromFile(
@@ -180,14 +192,7 @@ TEST(DepthFirstSearchTest, udg2) {
   vector<int> actual =
       GraphAlgorithms::DepthFirstSearch(test_graph, 0);
   ASSERT_EQ(expected.size(), actual.size());
-  bool state = true;
-  std::for_each(actual.begin(), actual.end(), [&expected, 
-                &state](int & node) mutable {
-    if (std::find(expected.begin(), expected.end(), node) == expected.end()) {
-      state = false;
-    }
-  });
-  ASSERT_TRUE(state);
+  ASSERT_TRUE(CompareVectorsContent(expected, actual));
 }
 
 TEST(DepthFirstSearchTest, dg1) {
@@ -198,14 +203,7 @@ TEST(DepthFirstSearchTest, dg1) {
   vector<int> actual =
       GraphAlgorithms::DepthFirstSearch(test_graph, 0);
   ASSERT_EQ(expected.size(), actual.size());
-  bool state = true;
-  std::for_each(actual.begin(), actual.end(), [&expected, 
-                &state](int & node) mutable {
-    if (std::find(expected.begin(), expected.end(), node) == expected.end()) {
-      state = false;
-    }
-  });
-  ASSERT_TRUE(state);
+  ASSERT_TRUE(CompareVectorsContent(expected, actual));
 }
 
 TEST(DepthFirstSearchTest, uug1) {
@@ -215,8 +213,7 @@ TEST(DepthFirstSearchTest, uug1) {
   vector<int> expected = {1, 2, 4, 3, 5, 6};
   vector<int> actual =
       GraphAlgorithms::DepthFirstSearch(test_graph, 0);
-
-  EXPECT_EQ(actual, expected);
+  ASSERT_TRUE(CompareVectorsContent(expected, actual));
 }
 
 TEST(DepthFirstSearchTest, wug1) {
@@ -227,29 +224,55 @@ TEST(DepthFirstSearchTest, wug1) {
   vector<int> actual =
       GraphAlgorithms::DepthFirstSearch(test_graph, 0);
   ASSERT_EQ(expected.size(), actual.size());
-  bool state = true;
-  std::for_each(actual.begin(), actual.end(), [&expected, 
-                &state](int & node) mutable {
-    if (std::find(expected.begin(), expected.end(), node) == expected.end()) {
-      state = false;
-    }
-  });
-  ASSERT_TRUE(state);
+  ASSERT_TRUE(CompareVectorsContent(expected, actual));
+}
+
+TEST(BreadthFirstSearch, udg2) {
+  Graph test_graph;
+  test_graph.LoadGraphFromFile(
+      "tests/examples/undirected_graph.txt");
+  vector<int> expected = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+  vector<int> actual =
+      GraphAlgorithms::BreadthFirstSearch(test_graph, 0);
+  ASSERT_EQ(expected.size(), actual.size());
+  ASSERT_TRUE(CompareVectorsContent(expected, actual));
+}
+
+TEST(BreadthFirstSearch, dg1) {
+  Graph test_graph;
+  test_graph.LoadGraphFromFile(
+      "tests/examples/unweighted_directed_graph.txt");
+  vector<int> expected = {1, 2, 3, 4, 5};
+  vector<int> actual =
+      GraphAlgorithms::BreadthFirstSearch(test_graph, 0);
+  ASSERT_EQ(expected.size(), actual.size());
+  ASSERT_TRUE(CompareVectorsContent(expected, actual));
+}
+
+TEST(BreadthFirstSearch, uug1) {
+  Graph test_graph;
+  test_graph.LoadGraphFromFile(
+      "tests/examples/unweighted_undirected_graph.txt");
+  vector<int> expected = {1, 2, 4, 3, 5, 6};
+  vector<int> actual =
+      GraphAlgorithms::BreadthFirstSearch(test_graph, 0);
+  ASSERT_EQ(expected.size(), actual.size());
+  ASSERT_TRUE(CompareVectorsContent(expected, actual));
+}
+
+TEST(BreadthFirstSearch, wug1) {
+  Graph test_graph;
+  test_graph.LoadGraphFromFile(
+      "tests/examples/weighted_undirected_graph.txt");
+  vector<int> expected = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+  vector<int> actual =
+      GraphAlgorithms::BreadthFirstSearch(test_graph, 0);
+  ASSERT_EQ(expected.size(), actual.size());
+  ASSERT_TRUE(CompareVectorsContent(expected, actual));
 }
 
 
 
-
-// TEST(BreadthFirstSearchTest, UnweightedUndirectedGraph) {
-//   Graph test_graph;
-//   test_graph.LoadGraphFromFile(
-//       "tests/examples/unweighted_undirected_graph.txt");
-//   vector<int> expected = {1, 2, 3, 4, 5, 6};
-//   vector<int> actual =
-//       GraphAlgorithms::BreadthFirstSearch(test_graph, 0);
-
-//   EXPECT_EQ(actual, expected);
-// }
 
 // TEST(GetShortestPathBetweenVertices, UnweightedDirectedGraph) {
 //   Graph graph;

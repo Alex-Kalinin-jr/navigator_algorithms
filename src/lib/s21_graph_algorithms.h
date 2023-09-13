@@ -36,9 +36,8 @@ struct Ant {
 class GraphAlgorithms {
  public:
   // Part1
-  static vector<int> DepthFirstSearch(const Graph &graph, 
-                                      const int start_vertex);
-  // static vector<int> BreadthFirstSearch(const Graph &graph, int start_vertex);
+  static vector<int> DepthFirstSearch(const Graph &graph, const int start);
+  static vector<int> BreadthFirstSearch(const Graph &graph, const int start);
 
   // // Part2
   // static int GetShortestPathBetweenVertices(const Graph &graph, int vertex1,
