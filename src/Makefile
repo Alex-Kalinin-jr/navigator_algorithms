@@ -3,8 +3,7 @@ CXXFLAGS=-c -std=c++17 -Werror -Wall -Wextra -Wpedantic -g -O0
 LDFLAGS=-lgtest -pthread
 TESTSRC=tests.cc
 
-# LIBSRC=lib/s21_graph.cc lib/s21_graph_algorithms.cc
-LIBSRC=lib/s21_graph.cc
+LIBSRC=lib/s21_graph.cc lib/s21_graph_algorithms.cc
 
 SRCFILES=main.cc view/console_view.cc controller/controller.cc
 SRCOBJ=$(SRCFILES:.cc=.o)
