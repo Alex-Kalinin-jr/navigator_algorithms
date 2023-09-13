@@ -42,8 +42,8 @@ class GraphAlgorithms {
   // Part2
   static int GetShortestPathBetweenVertices(const Graph &graph, const int vertex1,
                                             const int vertex2);
-  // static vector<vector<int>> GetShortestPathsBetweenAllVertices(
-  //     const Graph &graph);
+  static vector<vector<int>> GetShortestPathsBetweenAllVertices(
+      const Graph &graph);
 
   // // Part3
   // static vector<vector<int>> GetLeastSpanningTree(const Graph &graph);

@@ -108,32 +108,32 @@ int GraphAlgorithms::GetShortestPathBetweenVertices(const Graph &graph,
   return distance[vertex2 - 1];
 }
 
-// vector<vector<int>> GraphAlgorithms::GetShortestPathsBetweenAllVertices(
-//     const Graph &graph) {
-//   int num_vertices = graph.Size();
-//   vector<vector<int>> distances(num_vertices, vector<int>(num_vertices, kInf));
+vector<vector<int>> GraphAlgorithms::GetShortestPathsBetweenAllVertices(
+    const Graph &graph) {
+  int count = graph.Size();
+  vector<vector<int>> distances(count, vector<int>(count, kInf));
 
-//   for (int i = 0; i < num_vertices; i++) {
-//     for (int j = 0; j < num_vertices; j++) {
-//       if (graph.GetEdgeWeight(i, j) > 0) {
-//         distances[i][j] = graph.GetEdgeWeight(i, j);
-//       }
-//     }
-//   }
+  for (int i = 0; i < count; ++i) {
+    for (int j = 0; j < count; ++j) {
+      if (graph.GetEdgeWeight(i, j) > 0) {
+        distances[i][j] = graph.GetEdgeWeight(i, j);
+      }
+    }
+  }
 
-//   for (int k = 0; k < num_vertices; k++) {
-//     for (int i = 0; i < num_vertices; i++) {
-//       for (int j = 0; j < num_vertices; j++) {
-//         if (distances[i][k] != kInf && distances[k][j] != kInf) {
-//           distances[i][j] =
-//               std::min(distances[i][j], distances[i][k] + distances[k][j]);
-//         }
-//       }
-//     }
-//   }
+  for (int k = 0; k < count; ++k) {
+    for (int i = 0; i < count; ++i) {
+      for (int j = 0; j < count; ++j) {
+        if (distances[i][k] != kInf && distances[k][j] != kInf) {
+          distances[i][j] =
+              std::min(distances[i][j], distances[i][k] + distances[k][j]);
+        }
+      }
+    }
+  }
 
-//   return distances;
-// }
+  return distances;
+}
 
 // vector<vector<int>> GraphAlgorithms::GetLeastSpanningTree(const Graph &graph) {
 //   int num_vertices = graph.Size();

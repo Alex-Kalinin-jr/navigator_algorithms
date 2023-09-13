@@ -290,21 +290,30 @@ TEST(GetShortestPathBetweenVertices, dwg2) {
   EXPECT_EQ(GraphAlgorithms::GetShortestPathBetweenVertices(graph, 1, 4), 2);
 }
 
-// TEST(GetShortestPathsBetweenAllVertices, UnweightedDirectedGraph) {
-//   Graph graph;
-//   graph.LoadGraphFromFile("tests/examples/unweighted_directed_graph.txt");
+TEST(GetShortestPathsBetweenAllVertices, udg1) {
+  Graph graph;
+  graph.LoadGraphFromFile("tests/examples/unweighted_directed_graph.txt");
 
-//   vector<vector<int>> expected_distances = {{2, 1, 3, 1, 2},
-//                                             {2, 1, 3, 1, 2},
-//                                             {1, 2, 2, 1, 1},
-//                                             {1, 2, 2, 2, 1},
-//                                             {1, 2, 1, 2, 1}};
+  vector<vector<int>> expected = {{2, 1, 3, 1, 2},
+                                            {2, 1, 3, 1, 2},
+                                            {1, 2, 2, 1, 1},
+                                            {1, 2, 2, 2, 1},
+                                            {1, 2, 1, 2, 1}};
 
-//   vector<vector<int>> actual_distances =
-//       GraphAlgorithms::GetShortestPathsBetweenAllVertices(graph);
+  vector<vector<int>> actual =
+      GraphAlgorithms::GetShortestPathsBetweenAllVertices(graph);
 
-//   ASSERT_EQ(expected_distances, actual_distances);
-// }
+  ASSERT_EQ(expected, actual);
+}
+
+TEST(GetShortestPathsBetweenAllVertices, uug) {
+  Graph graph;
+  graph.LoadGraphFromFile("tests/examples/uug.txt");
+  vector<vector<int>> actual =
+      GraphAlgorithms::GetShortestPathsBetweenAllVertices(graph);
+
+  ASSERT_EQ(actual[0][4], 11);
+}
 
 // TEST(GetLeastSpanningTree, UnweightedDirectedGraph) {
 //   Graph graph;
