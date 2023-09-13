@@ -41,3 +41,6 @@ test: clean $(TESTOBJ) $(LIBSTATIC)
 	$(CC) $(TESTOBJ) $(LIBSTATIC) -g -o $(EXECUTABLE_TEST) $(LDFLAGS)
 	./$(EXECUTABLE_TEST)
 
+style:
+	clang-format -i -style=file *.cc *.h lib/*.cc lib/*.h
+

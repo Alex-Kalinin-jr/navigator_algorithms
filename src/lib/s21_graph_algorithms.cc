@@ -2,10 +2,10 @@
 
 #include <algorithm>
 #include <cmath>
+#include <exception>
 #include <iostream>
 #include <numeric>
 #include <vector>
-#include <exception>
 
 namespace s21 {
 
@@ -36,29 +36,27 @@ vector<int> GraphAlgorithms::DepthFirstSearch(const Graph &graph,
     }
   }
 
-  std::transform(traversed.begin(), traversed.end(),
-                 traversed.begin(), [](int &vertice) -> int {
+  std::transform(traversed.begin(), traversed.end(), traversed.begin(),
+                 [](int &vertice) -> int {
                    ++vertice;
                    return vertice;
                  });
   return traversed;
 }
 
-
-vector<int> GraphAlgorithms::BreadthFirstSearch(const Graph &graph,
-                                                int start) {
+vector<int> GraphAlgorithms::BreadthFirstSearch(const Graph &graph, int start) {
   if (start >= graph.Size()) {
     throw "invalid argument";
   }
   vector<bool> visited(graph.Size(), false);
   vector<int> traversed;
 
-  Queue<int> vertex_queue;
-  vertex_queue.push(start);
+  Queue<int> vertexQueue;
+  vertexQueue.push(start);
 
-  while (!vertex_queue.empty()) {
-    int vertex = vertex_queue.front();
-    vertex_queue.pop();
+  while (!vertexQueue.empty()) {
+    int vertex = vertexQueue.front();
+    vertexQueue.pop();
 
     if (!visited[vertex]) {
       visited[vertex] = true;
@@ -66,13 +64,13 @@ vector<int> GraphAlgorithms::BreadthFirstSearch(const Graph &graph,
 
       for (int neighbor : graph.Neighbors(vertex)) {
         if (!visited[neighbor]) {
-          vertex_queue.push(neighbor);
+          vertexQueue.push(neighbor);
         }
       }
     }
   }
-  std::transform(traversed.begin(), traversed.end(),
-                 traversed.begin(), [](int &vertice) -> int {
+  std::transform(traversed.begin(), traversed.end(), traversed.begin(),
+                 [](int &vertice) -> int {
                    ++vertice;
                    return vertice;
                  });
@@ -80,17 +78,18 @@ vector<int> GraphAlgorithms::BreadthFirstSearch(const Graph &graph,
 }
 
 int GraphAlgorithms::GetShortestPathBetweenVertices(const Graph &graph,
-                                                    const int vertex1, const int vertex2) {
+                                                    const int vertex1,
+                                                    const int vertex2) {
   vector<int> distance(graph.Size(), kInf);
   vector<bool> visited(graph.Size(), false);
-  Queue<int> vertex_queue;
+  Queue<int> vertexQueue;
 
   distance[vertex1 - 1] = 0;
-  vertex_queue.push(vertex1 - 1);
+  vertexQueue.push(vertex1 - 1);
 
-  while (!vertex_queue.empty()) {
-    int i = vertex_queue.front();
-    vertex_queue.pop();
+  while (!vertexQueue.empty()) {
+    int i = vertexQueue.front();
+    vertexQueue.pop();
 
     if (visited[i]) {
       continue;
@@ -101,15 +100,15 @@ int GraphAlgorithms::GetShortestPathBetweenVertices(const Graph &graph,
       int new_distance = distance[i] + graph.GetEdgeWeight(i, j);
       if (new_distance < distance[j]) {
         distance[j] = new_distance;
-        vertex_queue.push(j);
+        vertexQueue.push(j);
       }
     }
   }
   return distance[vertex2 - 1];
 }
 
-vector<vector<int>> GraphAlgorithms::GetShortestPathsBetweenAllVertices(
-    const Graph &graph) {
+vector<vector<int>>
+GraphAlgorithms::GetShortestPathsBetweenAllVertices(const Graph &graph) {
   int count = graph.Size();
   vector<vector<int>> distances(count, vector<int>(count, kInf));
 
@@ -135,15 +134,13 @@ vector<vector<int>> GraphAlgorithms::GetShortestPathsBetweenAllVertices(
   return distances;
 }
 
-
 vector<vector<int>> GraphAlgorithms::GetLeastSpanningTree(const Graph &graph) {
   int size = graph.Size();
   vector<bool> visited(size, false);
   vector<int> distances(size, kInf);
   vector<int> parents(size, -1);
 
-  vector<vector<int>> spanningTree(size, 
-                                    vector<int>(size, 0));
+  vector<vector<int>> spanningTree(size, vector<int>(size, 0));
 
   distances[0] = 0;
 
@@ -178,8 +175,6 @@ vector<vector<int>> GraphAlgorithms::GetLeastSpanningTree(const Graph &graph) {
 
   return spanningTree;
 }
-
-
 
 //************************************************************************
 //************************************************************************
@@ -291,4 +286,4 @@ TsmResult GraphAlgorithms::SolveTravelingSalesmanProblem(const Graph &graph) {
   return best_result;
 }
 
-}  // namespace s21
+} // namespace s21

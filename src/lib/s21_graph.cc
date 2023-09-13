@@ -1,16 +1,16 @@
 #include "s21_graph.h"
 
+#include <algorithm>
+#include <exception>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
-#include <exception>
-#include <algorithm>
 
 namespace s21 {
 
-int Graph::GetEdgeWeight(const int &i, const int &j) const { 
+int Graph::GetEdgeWeight(const int &i, const int &j) const {
   return adjacency_matrix_[i][j];
 }
 
@@ -56,8 +56,7 @@ void Graph::LoadGraphFromFile(std::string filename) {
   std::string buffStr;
   int vertexNumber = 0;
   std::getline(file, buffStr);
-  if (sscanf(buffStr.c_str(), "%d", &vertexNumber) != 1 ||
-                                        vertexNumber <= 0) {
+  if (sscanf(buffStr.c_str(), "%d", &vertexNumber) != 1 || vertexNumber <= 0) {
     throw "loadgraphfromfile: wrong file";
   }
 
@@ -79,8 +78,7 @@ void Graph::LoadGraphFromFile(std::string filename) {
   adjacency_matrix_ = adjacencyMatrix;
 }
 
-void Graph::CheckCorrectness(vector<vector<int>> &vctr, 
-                            const int &size) const {
+void Graph::CheckCorrectness(vector<vector<int>> &vctr, const int &size) const {
   std::size_t sz = static_cast<int>(size);
   if (vctr.size() != sz) {
     throw "loadgraphfromfile: wrong file";
@@ -92,9 +90,9 @@ void Graph::CheckCorrectness(vector<vector<int>> &vctr,
   });
 }
 
-void Graph::CheckLineCorrectness(const std::string & buffLine) const {
+void Graph::CheckLineCorrectness(const std::string &buffLine) const {
   std::for_each(buffLine.begin(), buffLine.end(), [](const char &a) {
-    if (a != ' ' && a != '-' && (a > 57 || a < 48 )) {
+    if (a != ' ' && a != '-' && (a > 57 || a < 48)) {
       throw "loadgraphfromfile: wrong file";
     }
   });
@@ -123,8 +121,8 @@ void Graph::Export(std::ofstream &file, const bool state) const {
   file << "}" << std::endl;
 }
 
-void Graph::ExportEdgeWeight(std::ofstream &file, 
-                            const int &i, const int &j) const {
+void Graph::ExportEdgeWeight(std::ofstream &file, const int &i,
+                             const int &j) const {
   if (adjacency_matrix_[i][j] > 0) {
     file << " [label=" << adjacency_matrix_[i][j]
          << "; weight=" << adjacency_matrix_[i][j] << ";]";
@@ -142,4 +140,4 @@ void Graph::PrintMatrix() const {
   std::cout << std::endl;
 }
 
-}  // namespace s21
+} // namespace s21

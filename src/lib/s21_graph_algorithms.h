@@ -34,16 +34,17 @@ struct Ant {
 };
 
 class GraphAlgorithms {
- public:
+public:
   // Part1
   static vector<int> DepthFirstSearch(const Graph &graph, const int start);
   static vector<int> BreadthFirstSearch(const Graph &graph, const int start);
 
   // Part2
-  static int GetShortestPathBetweenVertices(const Graph &graph, const int vertex1,
+  static int GetShortestPathBetweenVertices(const Graph &graph,
+                                            const int vertex1,
                                             const int vertex2);
-  static vector<vector<int>> GetShortestPathsBetweenAllVertices(
-      const Graph &graph);
+  static vector<vector<int>>
+  GetShortestPathsBetweenAllVertices(const Graph &graph);
 
   // // Part3
   static vector<vector<int>> GetLeastSpanningTree(const Graph &graph);
@@ -66,6 +67,6 @@ class GraphAlgorithms {
   static double Random();
 };
 
-}  // namespace s21
+} // namespace s21
 
-#endif  // SRC_LIB_S21_GRAPH_ALGORITHMS_H_
+#endif // SRC_LIB_S21_GRAPH_ALGORITHMS_H_

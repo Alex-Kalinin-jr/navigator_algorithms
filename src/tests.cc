@@ -1,11 +1,11 @@
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 #include "lib/s21_graph.h"
 #include "lib/s21_graph_algorithms.h"
-#include "gtest/gtest.h"
-#include "lib/s21_stack.h"
 #include "lib/s21_queue.h"
+#include "lib/s21_stack.h"
+#include "gtest/gtest.h"
 
 using s21::Graph;
 using s21::GraphAlgorithms;
@@ -13,15 +13,13 @@ using std::vector;
 
 bool CompareVectorsContent(std::vector<int> &a, std::vector<int> &b) {
   bool state = true;
-  std::for_each(a.begin(), a.end(), [&b, &state](int & node) mutable {
+  std::for_each(a.begin(), a.end(), [&b, &state](int &node) mutable {
     if (std::find(b.begin(), b.end(), node) == b.end()) {
       state = false;
     }
   });
   return state;
 }
-
-
 
 TEST(ExportGraphToDot, aa) {
   Graph test_graph;
@@ -93,13 +91,13 @@ TEST(LoadGraphFromFile, WeightedDirectedGraph) {
 TEST(stack, create) {
   s21::Stack<int> a;
   s21::Stack<int> b({1, 2, 3, 4});
-  s21::Stack<int>c(b);
-  s21::Stack<int>d;
+  s21::Stack<int> c(b);
+  s21::Stack<int> d;
   d = c;
   s21::Stack<int> e = s21::Stack<int>({1, 3, -5});
   a = s21::Stack<int>(b);
-  s21::Stack<int>f(s21::Stack<int>({1, 2, 3}));
-  s21::Stack<int>g(s21::Stack<int>(b));
+  s21::Stack<int> f(s21::Stack<int>({1, 2, 3}));
+  s21::Stack<int> g(s21::Stack<int>(b));
 }
 
 TEST(stack, operations) {
@@ -113,7 +111,7 @@ TEST(stack, operations) {
 }
 
 TEST(stack, operations2) {
-  s21::Stack<int> a {3, 4, 5};
+  s21::Stack<int> a{3, 4, 5};
   ASSERT_FALSE(a.empty());
   for (int i = 0; i < 1000000; ++i) {
     a.push(i);
@@ -126,8 +124,8 @@ TEST(stack, operations2) {
 }
 
 TEST(stack, operations3) {
-  s21::Stack<int> a {3, 4, 5};
-  s21::Stack<int> b {2, 6, 8};
+  s21::Stack<int> a{3, 4, 5};
+  s21::Stack<int> b{2, 6, 8};
   s21::Stack<int> c(a);
   s21::Stack<int> d(b);
   c.swap(b);
@@ -139,13 +137,13 @@ TEST(stack, operations3) {
 TEST(queue, create) {
   s21::Queue<int> a;
   s21::Queue<int> b({1, 2, 3, 4});
-  s21::Queue<int>c(b);
-  s21::Queue<int>d;
+  s21::Queue<int> c(b);
+  s21::Queue<int> d;
   d = c;
   s21::Queue<int> e = s21::Queue<int>({1, 3, -5});
   a = s21::Queue<int>(b);
-  s21::Queue<int>f(s21::Queue<int>({1, 2, 3}));
-  s21::Queue<int>g(s21::Queue<int>(b));
+  s21::Queue<int> f(s21::Queue<int>({1, 2, 3}));
+  s21::Queue<int> g(s21::Queue<int>(b));
 }
 
 TEST(queue, operations) {
@@ -174,8 +172,8 @@ TEST(queue, operations2) {
 }
 
 TEST(queue, operations3) {
-  s21::Queue<int> a {3, 4, 5};
-  s21::Queue<int> b {2, 6, 8};
+  s21::Queue<int> a{3, 4, 5};
+  s21::Queue<int> b{2, 6, 8};
   s21::Queue<int> c(a);
   s21::Queue<int> d(b);
   c.swap(b);
@@ -186,22 +184,18 @@ TEST(queue, operations3) {
 
 TEST(DepthFirstSearchTest, udg2) {
   Graph test_graph;
-  test_graph.LoadGraphFromFile(
-      "tests/examples/undirected_graph.txt");
+  test_graph.LoadGraphFromFile("tests/examples/undirected_graph.txt");
   vector<int> expected = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
-  vector<int> actual =
-      GraphAlgorithms::DepthFirstSearch(test_graph, 0);
+  vector<int> actual = GraphAlgorithms::DepthFirstSearch(test_graph, 0);
   ASSERT_EQ(expected.size(), actual.size());
   ASSERT_TRUE(CompareVectorsContent(expected, actual));
 }
 
 TEST(DepthFirstSearchTest, dg1) {
   Graph test_graph;
-  test_graph.LoadGraphFromFile(
-      "tests/examples/unweighted_directed_graph.txt");
+  test_graph.LoadGraphFromFile("tests/examples/unweighted_directed_graph.txt");
   vector<int> expected = {1, 2, 3, 4, 5};
-  vector<int> actual =
-      GraphAlgorithms::DepthFirstSearch(test_graph, 0);
+  vector<int> actual = GraphAlgorithms::DepthFirstSearch(test_graph, 0);
   ASSERT_EQ(expected.size(), actual.size());
   ASSERT_TRUE(CompareVectorsContent(expected, actual));
 }
@@ -211,40 +205,33 @@ TEST(DepthFirstSearchTest, uug1) {
   test_graph.LoadGraphFromFile(
       "tests/examples/unweighted_undirected_graph.txt");
   vector<int> expected = {1, 2, 4, 3, 5, 6};
-  vector<int> actual =
-      GraphAlgorithms::DepthFirstSearch(test_graph, 0);
+  vector<int> actual = GraphAlgorithms::DepthFirstSearch(test_graph, 0);
   ASSERT_TRUE(CompareVectorsContent(expected, actual));
 }
 
 TEST(DepthFirstSearchTest, wug1) {
   Graph test_graph;
-  test_graph.LoadGraphFromFile(
-      "tests/examples/weighted_undirected_graph.txt");
+  test_graph.LoadGraphFromFile("tests/examples/weighted_undirected_graph.txt");
   vector<int> expected = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
-  vector<int> actual =
-      GraphAlgorithms::DepthFirstSearch(test_graph, 0);
+  vector<int> actual = GraphAlgorithms::DepthFirstSearch(test_graph, 0);
   ASSERT_EQ(expected.size(), actual.size());
   ASSERT_TRUE(CompareVectorsContent(expected, actual));
 }
 
 TEST(BreadthFirstSearch, udg2) {
   Graph test_graph;
-  test_graph.LoadGraphFromFile(
-      "tests/examples/undirected_graph.txt");
+  test_graph.LoadGraphFromFile("tests/examples/undirected_graph.txt");
   vector<int> expected = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
-  vector<int> actual =
-      GraphAlgorithms::BreadthFirstSearch(test_graph, 0);
+  vector<int> actual = GraphAlgorithms::BreadthFirstSearch(test_graph, 0);
   ASSERT_EQ(expected.size(), actual.size());
   ASSERT_TRUE(CompareVectorsContent(expected, actual));
 }
 
 TEST(BreadthFirstSearch, dg1) {
   Graph test_graph;
-  test_graph.LoadGraphFromFile(
-      "tests/examples/unweighted_directed_graph.txt");
+  test_graph.LoadGraphFromFile("tests/examples/unweighted_directed_graph.txt");
   vector<int> expected = {1, 2, 3, 4, 5};
-  vector<int> actual =
-      GraphAlgorithms::BreadthFirstSearch(test_graph, 0);
+  vector<int> actual = GraphAlgorithms::BreadthFirstSearch(test_graph, 0);
   ASSERT_EQ(expected.size(), actual.size());
   ASSERT_TRUE(CompareVectorsContent(expected, actual));
 }
@@ -254,19 +241,16 @@ TEST(BreadthFirstSearch, uug1) {
   test_graph.LoadGraphFromFile(
       "tests/examples/unweighted_undirected_graph.txt");
   vector<int> expected = {1, 2, 4, 3, 5, 6};
-  vector<int> actual =
-      GraphAlgorithms::BreadthFirstSearch(test_graph, 0);
+  vector<int> actual = GraphAlgorithms::BreadthFirstSearch(test_graph, 0);
   ASSERT_EQ(expected.size(), actual.size());
   ASSERT_TRUE(CompareVectorsContent(expected, actual));
 }
 
 TEST(BreadthFirstSearch, wug1) {
   Graph test_graph;
-  test_graph.LoadGraphFromFile(
-      "tests/examples/weighted_undirected_graph.txt");
+  test_graph.LoadGraphFromFile("tests/examples/weighted_undirected_graph.txt");
   vector<int> expected = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
-  vector<int> actual =
-      GraphAlgorithms::BreadthFirstSearch(test_graph, 0);
+  vector<int> actual = GraphAlgorithms::BreadthFirstSearch(test_graph, 0);
   ASSERT_EQ(expected.size(), actual.size());
   ASSERT_TRUE(CompareVectorsContent(expected, actual));
 }
@@ -295,10 +279,10 @@ TEST(GetShortestPathsBetweenAllVertices, udg1) {
   graph.LoadGraphFromFile("tests/examples/unweighted_directed_graph.txt");
 
   vector<vector<int>> expected = {{2, 1, 3, 1, 2},
-                                            {2, 1, 3, 1, 2},
-                                            {1, 2, 2, 1, 1},
-                                            {1, 2, 2, 2, 1},
-                                            {1, 2, 1, 2, 1}};
+                                  {2, 1, 3, 1, 2},
+                                  {1, 2, 2, 1, 1},
+                                  {1, 2, 2, 2, 1},
+                                  {1, 2, 1, 2, 1}};
 
   vector<vector<int>> actual =
       GraphAlgorithms::GetShortestPathsBetweenAllVertices(graph);
