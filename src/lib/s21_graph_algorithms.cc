@@ -180,18 +180,57 @@ vector<vector<int>> GraphAlgorithms::GetLeastSpanningTree(const Graph &graph) {
 
 //************************************************************************
 //************************************************************************
-double GraphAlgorithms::Distance(int i, int j, const Graph &graph) {
-  int res = graph.GetEdgeWeight(i, j);
-  return res;
-}
-
-double GraphAlgorithms::Eta(int i, int j, const Graph &graph) {
-  return 1.0 / Distance(i, j, graph);
-}
-
 vector<vector<double>> GraphAlgorithms::InitializePheromone(int n) {
   return vector<vector<double>>(n, vector<double>(n, kInitialPheromone));
 }
+
+
+double GraphAlgorithms::Eta(int i, int j, const Graph &graph) {
+    return 1.0 / (graph.GetEdgeWeight(i, j));
+}
+
+
+double GraphAlgorithms::Random() { 
+  std::random_device rd;
+  std::default_random_engine engine(rd());
+  auto gen = std::bind(std::uniform_real_distribution<>(0, 1), engine);
+  return static_cast<double>(gen());
+}
+
+
+int GraphAlgorithms::SelectNext(const int current, const vector<bool> &visited,
+                                const vector<vector<double>> &pheromone,
+                                const Graph &graph) {
+  int answ = -1;
+  double answAttractivness = 0.0;
+  // compute divider
+  double sum = 0.0;                                              
+  for (int i = 0; i < visited.size(); ++i) {
+    if (!visited[i] && (graph.GetEdgeWeight(current, i) > 0)) {
+      sum += pow(pheromone[current][i], kAlpha) *
+             pow(Eta(current, i, graph), kBeta);
+    }
+  }
+  // compute attractivness and compare with current answ
+  double buffAttractivness = 0.0;
+  for (int i = 0; i < visited.size(); ++i) {
+    if (!visited[i] && (graph.GetEdgeWeight(current, i) > 0)) {
+      buffAttractivness = pow(pheromone[current][i], kAlpha) * 
+            pow(Eta(current, i, graph), kBeta) / sum;
+      if (buffAttractivness > answAttractivness) {
+        answ = i;
+        answAttractivness = buffAttractivness;
+      }
+    }
+  }
+  return answ;
+}
+
+
+//************************************************************************
+//************************************************************************
+
+
 
 void GraphAlgorithms::UpdatePheromone(vector<vector<double>> &pheromone,
                                       const vector<TsmResult> &ants) {
@@ -211,37 +250,15 @@ void GraphAlgorithms::UpdatePheromone(vector<vector<double>> &pheromone,
   }
 }
 
-double GraphAlgorithms::Random() { 
-  std::random_device rd;
-  std::default_random_engine engine(rd());
-  auto gen = std::bind(std::uniform_real_distribution<>(0, 1), engine);
-  return static_cast<double>(gen());
-}
 
-int GraphAlgorithms::SelectNext(int current, const vector<bool> &visited,
-                                const vector<vector<double>> &pheromone,
-                                const Graph &graph) {
-  int n = visited.size();
-  double sum = 0.0;
-  for (int i = 0; i < n; i++) {
-    if (!visited[i]) {
-      sum += pow(pheromone[current][i], kAlpha) *
-             pow(Eta(current, i, graph), kBeta);
-    }
-  }
-  double r = Random() * sum;
-  double partial = 0.0;
-  for (int i = 0; i < n; i++) {
-    if (!visited[i]) {
-      partial += pow(pheromone[current][i], kAlpha) *
-                 pow(Eta(current, i, graph), kBeta);
-      if (partial >= r) {
-        return i;
-      }
-    }
-  }
-  return -1;
-}
+
+
+
+
+
+
+
+
 
 TsmResult GraphAlgorithms::BuildTour(int start, vector<bool> &visited,
                                      const vector<vector<double>> &pheromone,
@@ -252,26 +269,33 @@ TsmResult GraphAlgorithms::BuildTour(int start, vector<bool> &visited,
   visited[start] = true;
   int current = start;
   int n = visited.size();
-  for (int i = 1; i < n; i++) {
+
+  for (int i = 1; i < visited.size(); ++i) {
     int next = SelectNext(current, visited, pheromone, graph);
     result.vertices.push_back(next);
-    result.distance += Distance(current, next, graph);
+    result.distance += graph.GetEdgeWeight(current, next);
     visited[next] = true;
     current = next;
   }
+
   result.vertices.push_back(start);
-  result.distance += Distance(current, start, graph);
+  result.distance += graph.GetEdgeWeight(current, start);
   return result;
 }
 
+
+
+
+
 TsmResult GraphAlgorithms::SolveTravelingSalesmanProblem(const Graph &graph) {
   int n = graph.Size();
-  std::cout << n;
   vector<vector<double>> pheromone = InitializePheromone(n);
   TsmResult best_result;
   best_result.distance = std::numeric_limits<double>::max();
   for (int iter = 0; iter < kNumIterations; iter++) {
+
     std::vector<TsmResult> ants(kNumAnts);
+
     for (int k = 0; k < kNumAnts; k++) {
       int start = rand() % (n - 1);
       std::vector<bool> visited(n, false);

@@ -52,19 +52,20 @@ public:
   // Part4
   static TsmResult SolveTravelingSalesmanProblem(const Graph &graph);
   //
-  static double Distance(int i, int j, const Graph &graph);
   static double Eta(int i, int j, const Graph &graph);
   static vector<vector<double>> InitializePheromone(int n);
   static void UpdatePheromone(vector<vector<double>> &pheromone,
                               const vector<TsmResult> &ants);
 
-  static int SelectNext(int current, const vector<bool> &visited,
+  static int SelectNext(const int current, const vector<bool> &visited,
                         const vector<vector<double>> &pheromone,
                         const Graph &graph);
   static TsmResult BuildTour(int start, vector<bool> &visited,
                              const vector<vector<double>> &pheromone,
                              const Graph &graph);
-  static double Random();
+  
+  private:
+    static double Random();
 };
 
 } // namespace s21
