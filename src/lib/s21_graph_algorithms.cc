@@ -287,7 +287,7 @@ TsmResult GraphAlgorithms::SolveTravelingSalesmanProblem(const Graph &graph) {
     std::vector<TsmResult> succededAnts;
 
     for (int k = 0; k < kNumAnts; k++) {
-      int start = rand() % (n - 1); // rewrite
+      int start = 0;
       std::vector<bool> visited(n, false);
       ants[k] = BuildTour(start, visited, pheromone, graph);
       int size = ants[k].vertices.size();
@@ -301,12 +301,6 @@ TsmResult GraphAlgorithms::SolveTravelingSalesmanProblem(const Graph &graph) {
     UpdatePheromone(pheromone, succededAnts, graph);
   }
 
-  int zero_index =
-      std::find(best_result.vertices.begin(), best_result.vertices.end(), 0) -
-      best_result.vertices.begin();
-  std::rotate(best_result.vertices.begin(),
-              best_result.vertices.begin() + zero_index,
-              best_result.vertices.end());
   std::for_each(best_result.vertices.begin(), best_result.vertices.end(),
                 [](int &x) { ++x; });
   return best_result;
