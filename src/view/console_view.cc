@@ -123,13 +123,17 @@ void ConsoleView::HandleMinimalSpanningTreeSearch() {
 }
 
 void ConsoleView::HandleTravelingSalesmanProblem() {
-  auto tsm_result = controller_->SolveTravelingSalesmanProblem();
-  cout << "Shortest tour distance: " << tsm_result.distance << endl;
-  cout << "Tour vertices: ";
-  for (int vertex : tsm_result.vertices) {
-    cout << vertex << " ";
+  try {
+    auto tsm_result = controller_->SolveTravelingSalesmanProblem();
+    cout << "Shortest tour distance: " << tsm_result.distance << endl;
+    cout << "Tour vertices: ";
+    for (int vertex : tsm_result.vertices) {
+      cout << vertex << " ";
+    }
+    cout << endl;
+  } catch (...) {
+    std::cout<<"some errors occured. Maybe you forgot to load file?"<<std::endl;
   }
-  cout << endl;
 }
 
 void ConsoleView::DisplayTraversal(const vector<int>& traversal) const {

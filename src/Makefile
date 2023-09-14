@@ -17,7 +17,7 @@ OPEN=xdg-open
 
 .PHONY: all build clean tests build_tests
 
-# all: build
+all: build
 
 %.o: %.cc
 	$(CC) $(CXXFLAGS) $^ -o $@
@@ -28,10 +28,10 @@ OPEN=xdg-open
 
 s21_graph.a: lib/s21_graph.a
 
-# s21_graph_algorithms.a: lib/s21_graph_algorithms.a
+s21_graph_algorithms.a: lib/s21_graph_algorithms.a
 
-# cppcheck:
-# 	cppcheck --language=c++ --std=c++17 --enable=all $(SRCFILES) $(LIBSRC) main.cc
+cppcheck:
+	cppcheck --language=c++ --std=c++17 --enable=all $(SRCFILES) $(LIBSRC) main.cc
 
 build: clean $(SRCOBJ) $(LIBSTATIC)
 	$(CC) $(SRCOBJ) $(LIBSTATIC) -o $(EXECUTABLE) $(LDFLAGS)

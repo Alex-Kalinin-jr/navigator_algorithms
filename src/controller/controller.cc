@@ -32,6 +32,9 @@ vector<vector<int>> Controller::GetLeastSpanningTree() {
 }
 
 TsmResult Controller::SolveTravelingSalesmanProblem() {
+  if (graph_->Size() == 0) {
+    throw "empty graph";
+  }
   return GraphAlgorithms::SolveTravelingSalesmanProblem(*graph_);
 }
 
