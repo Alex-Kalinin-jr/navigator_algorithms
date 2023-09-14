@@ -29,14 +29,19 @@ void ConsoleView::DisplayMenu() {
 
 void ConsoleView::StartEventLoop() {
   int choice = NONE_C;
-  while (choice != EXIT_C) {
+  while (true) {
     DisplayMenu();
     cin >> choice;
+    if (choice == EXIT_C) {
+      break;
+    }
+    if (choice > SALESMAN_PROBLEM_C && choice < EXIT_C) {
+      cout << "Invalid choice. Please try again." << endl;
+      continue;
+    }
+    std::system("clear");
+    controller_->ReceiveSignal(choice);
   }
-
-
-            cout << "Invalid choice. Please try again." << endl;
-          break;
 }
 
 int ConsoleView::GetUserChoice() {
@@ -80,21 +85,6 @@ void ConsoleView::HandleTravelingSalesmanProblem(TsmResult &tsm_result) {
             <<std::endl;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void ConsoleView::DisplayTraversal(const vector<int>& traversal) const {
   cout << "Traversal: ";

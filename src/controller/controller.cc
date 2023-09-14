@@ -1,5 +1,5 @@
 #include "controller.h"
-#include "console_view.h"
+#include "../view/console_view.h"
 
 #include <string>
 #include <iostream>

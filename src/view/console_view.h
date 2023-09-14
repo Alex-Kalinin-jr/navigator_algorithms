@@ -6,7 +6,7 @@
 
 namespace s21 {
 
-
+class Controller;
 
 class ConsoleView {
  public:
@@ -14,9 +14,6 @@ class ConsoleView {
   void StartEventLoop();
   void DisplayMenu();
   int GetUserChoice();
-
-
-
 
   void HandleLoadGraph();
   void HandleBreadthFirstTraversal();

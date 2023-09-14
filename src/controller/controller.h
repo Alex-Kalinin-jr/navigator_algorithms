@@ -4,14 +4,15 @@
 #include "../lib/s21_graph.h"
 #include "../lib/s21_graph_algorithms.h"
 #include "../view/choice.h"
-#include "console_view.h"
+#include "../view/console_view.h"
 
 namespace s21 {
 
+class ConsoleView;
+
 class Controller {
  public:
-  explicit Controller(ConsoleView * view) 
-      : view_(nullptr) { graph_ = new Graph(); }
+  explicit Controller() : view_(nullptr) { graph_ = new Graph(); }
   Controller(const Controller &other) = delete;
   Controller &operator=(const Controller &other) = delete;
   ~Controller() { delete graph_; }
