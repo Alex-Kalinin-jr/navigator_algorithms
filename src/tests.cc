@@ -372,23 +372,23 @@ TEST(SolveTravelingSalesmanProblem, wug2) {
 
   s21::TsmResult expected = {{1, 3, 4, 2, 1}, 80, 0};
 
-  // EXPECT_EQ(result.distance, expected.distance);
+  EXPECT_EQ(result.distance, expected.distance);
   ASSERT_TRUE(
       CompareWithDirectAndReversedVector(result.vertices, expected.vertices));
 }
 
-// TEST(SolveTravelingSalesmanProblem, wug3) {
-//   Graph test_graph;
-//   s21::TsmResult result;
-//   test_graph.LoadGraphFromFile("tests/examples/wug3.txt");
-//   result = GraphAlgorithms::SolveTravelingSalesmanProblem(test_graph);
+TEST(SolveTravelingSalesmanProblem, wug3) {
+  Graph test_graph;
+  s21::TsmResult result;
+  test_graph.LoadGraphFromFile("tests/examples/wug3.txt");
+  result = GraphAlgorithms::SolveTravelingSalesmanProblem(test_graph);
 
-//   s21::TsmResult expected = {{1, 5, 4, 3, 2, 1}, 99};
+  s21::TsmResult expected = {{1, 5, 4, 3, 2, 1}, 99, 0};
 
-// EXPECT_EQ(result.distance, expected.distance);
-// ASSERT_TRUE(CompareWithDirectAndReversedVector(result.vertices,
-//                                               expected.vertices));
-// }
+EXPECT_EQ(result.distance, expected.distance);
+ASSERT_TRUE(CompareWithDirectAndReversedVector(result.vertices,
+                                              expected.vertices));
+}
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

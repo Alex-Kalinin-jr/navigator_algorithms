@@ -200,17 +200,17 @@ int GraphAlgorithms::SelectNext(const int current, const vector<bool> &visited,
                                 const Graph &graph) {
   int answ = -1;
   double answAttractivness = 0.0;
-  // compute divider
+  int size = visited.size();
   double sum = 0.0;
-  for (int i = 0; i < visited.size(); ++i) {
+  for (int i = 0; i < size; ++i) {
     if (!visited[i] && (graph.GetEdgeWeight(current, i) > 0)) {
       sum += pow(pheromone[current][i], kAlpha) *
              pow(Eta(current, i, graph), kBeta);
     }
   }
-  // compute attractivness and compare with current answ
+
   double buffAttractivness = 0.0;
-  for (int i = 0; i < visited.size(); ++i) {
+  for (int i = 0; i < size; ++i) {
     if (!visited[i] && (graph.GetEdgeWeight(current, i) > 0)) {
       buffAttractivness = pow(pheromone[current][i], kAlpha) *
                           pow(Eta(current, i, graph), kBeta) / sum;
@@ -229,8 +229,9 @@ int GraphAlgorithms::SelectNext(const int current, const vector<bool> &visited,
 void GraphAlgorithms::UpdatePheromone(vector<vector<double>> &pheromone,
                                       const vector<TsmResult> &ants,
                                       const Graph &graph) {
-  for (int i = 0; i < pheromone.size(); ++i) {
-    for (int j = 0; j < pheromone[i].size(); ++j)
+  int size = pheromone.size();
+  for (int i = 0; i < size; ++i) {
+    for (int j = 0; j < size; ++j)
       pheromone[i][j] *= kRHO;
   }
 
@@ -253,10 +254,12 @@ TsmResult GraphAlgorithms::BuildTour(int start, vector<bool> &visited,
   ant.distance = 0.0;
   visited[start] = true;
   int current = start;
-  int n = visited.size();
-
-  for (int i = 1; i < visited.size(); ++i) {
+  int size = visited.size();
+  for (int i = 1; i < size; ++i) {
     int next = SelectNext(current, visited, pheromone, graph);
+    if (next == -1) {
+      break;
+    }
     ant.vertices.push_back(next);
     ant.distance += graph.GetEdgeWeight(current, next);
     ant.quantity_ += pheromone[current][next];
@@ -287,8 +290,8 @@ TsmResult GraphAlgorithms::SolveTravelingSalesmanProblem(const Graph &graph) {
       int start = rand() % (n - 1); // rewrite
       std::vector<bool> visited(n, false);
       ants[k] = BuildTour(start, visited, pheromone, graph);
-
-      if (ants[k].vertices.size() == (n + 1)) {
+      int size = ants[k].vertices.size();
+      if (size == (n + 1)) {
         succededAnts.push_back(ants[k]);
         if (ants[k].distance <= best_result.distance) {
           best_result = ants[k];
