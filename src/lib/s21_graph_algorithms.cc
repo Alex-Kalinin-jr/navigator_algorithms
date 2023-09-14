@@ -178,15 +178,16 @@ vector<vector<int>> GraphAlgorithms::GetLeastSpanningTree(const Graph &graph) {
   return spanningTree;
 }
 
-//************************************************************************
-//************************************************************************
+
 vector<vector<double>> GraphAlgorithms::InitializePheromone(int n) {
   return vector<vector<double>>(n, vector<double>(n, kInitialPheromone));
 }
 
+
 double GraphAlgorithms::Eta(int i, int j, const Graph &graph) {
   return 1.0 / (graph.GetEdgeWeight(i, j));
 }
+
 
 double GraphAlgorithms::Random() {
   std::random_device rd;
@@ -194,6 +195,7 @@ double GraphAlgorithms::Random() {
   auto gen = std::bind(std::uniform_real_distribution<>(0, 1), engine);
   return static_cast<double>(gen());
 }
+
 
 int GraphAlgorithms::SelectNext(const int current, const vector<bool> &visited,
                                 const vector<vector<double>> &pheromone,
@@ -223,17 +225,15 @@ int GraphAlgorithms::SelectNext(const int current, const vector<bool> &visited,
   return answ;
 }
 
-//************************************************************************
-//************************************************************************
 
 void GraphAlgorithms::UpdatePheromone(vector<vector<double>> &pheromone,
                                       const vector<TsmResult> &ants,
                                       const Graph &graph) {
-  int size = pheromone.size();
-  for (int i = 0; i < size; ++i) {
-    for (int j = 0; j < size; ++j)
-      pheromone[i][j] *= kRHO;
+for (auto & start : pheromone) {
+  for (auto & road: start) {
+    road *= kRHO;
   }
+}
 
   for (auto &ant : ants) {
     for (auto itr = ant.vertices.begin(); itr != ant.vertices.end() - 1;
@@ -245,6 +245,7 @@ void GraphAlgorithms::UpdatePheromone(vector<vector<double>> &pheromone,
     }
   }
 }
+
 
 TsmResult GraphAlgorithms::BuildTour(int start, vector<bool> &visited,
                                      const vector<vector<double>> &pheromone,
@@ -276,6 +277,7 @@ TsmResult GraphAlgorithms::BuildTour(int start, vector<bool> &visited,
   return ant;
 }
 
+
 TsmResult GraphAlgorithms::SolveTravelingSalesmanProblem(const Graph &graph) {
   int n = graph.Size();
   vector<vector<double>> pheromone = InitializePheromone(n);
@@ -289,7 +291,7 @@ TsmResult GraphAlgorithms::SolveTravelingSalesmanProblem(const Graph &graph) {
     std::random_device rd;
     std::default_random_engine engine(rd());
     auto gen = std::bind(std::uniform_int_distribution<>(0, n - 2), engine);
-    
+
     for (int k = 0; k < kNumAnts; k++) {
       int start = gen();
 
