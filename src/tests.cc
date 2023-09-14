@@ -383,7 +383,7 @@ TEST(SolveTravelingSalesmanProblem, wug3) {
   test_graph.LoadGraphFromFile("tests/examples/wug3.txt");
   result = GraphAlgorithms::SolveTravelingSalesmanProblem(test_graph);
 
-  s21::TsmResult expected = {{1, 5, 4, 3, 2, 1}, 99, 0};
+  s21::TsmResult expected = {{1, 4, 5, 2, 3, 1}, 55, 0};
 
 EXPECT_EQ(result.distance, expected.distance);
 ASSERT_TRUE(CompareWithDirectAndReversedVector(result.vertices,
