@@ -13,6 +13,8 @@ LIBSTATIC=$(LIBSRC:.cc=.a)
 EXECUTABLE=SimpleNavigator
 EXECUTABLE_TEST=SimpleNavigatorTest
 
+OPEN=xdg-open
+
 .PHONY: all build clean tests build_tests
 
 # all: build
@@ -31,8 +33,8 @@ s21_graph.a: lib/s21_graph.a
 # cppcheck:
 # 	cppcheck --language=c++ --std=c++17 --enable=all $(SRCFILES) $(LIBSRC) main.cc
 
-# build: clean $(SRCOBJ) $(LIBSTATIC)
-# 	$(CC) $(SRCOBJ) $(LIBSTATIC) -o $(EXECUTABLE) $(LDFLAGS)
+build: clean $(SRCOBJ) $(LIBSTATIC)
+	$(CC) $(SRCOBJ) $(LIBSTATIC) -o $(EXECUTABLE) $(LDFLAGS)
 
 clean:
 	@rm -f $(TESTOBJ) $(SRCOBJ) $(LIBOBJ) $(LIBSTATIC) $(EXECUTABLE) $(EXECUTABLE_TEST)
@@ -40,6 +42,11 @@ clean:
 test: clean $(TESTOBJ) $(LIBSTATIC)
 	$(CC) $(TESTOBJ) $(LIBSTATIC) -g -o $(EXECUTABLE_TEST) $(LDFLAGS)
 	./$(EXECUTABLE_TEST)
+	
+dvi:
+	cd ./docs/; rm -rf *.aux *.log *.pdf
+	cd ./docs/; pdflatex manual.tex
+	$(OPEN) ./docs/manual.pdf
 
 style:
 	clang-format -i -style=file *.cc *.h lib/*.cc lib/*.h
