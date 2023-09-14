@@ -1,8 +1,55 @@
 #include "controller.h"
+#include "console_view.h"
+
+#include <string>
+#include <iostream>
 
 namespace s21 {
 
-void Controller::LoadGraphFromFile(const std::string &filename) {
+using std::cin;
+
+void Controller::SetView(ConsoleView *view) {
+  view_ = view;
+}
+
+void Controller::ReceiveSignal(int choice) {
+  switch ((Choice)choice) {
+        case LOAD_GRAPH_C: {
+          LoadGraphFromFile();
+          break;
+        }
+        case BREADTH_TRAVERSAL_C: {
+          DepthFirstSearch();
+          break;
+        }
+        case DEAPTH_TRAVERSAL_C: {
+          BreadthFirstSearch();
+          break;
+        }
+        case SEARCH_SHORTEST_PATH_C: {
+          GetShortestPathBetweenVertices();
+          break;
+        }
+        case SEARCH_ALL_SHORTEST_PATHS_C: {
+          GetShortestPathsBetweenAllVertices();
+          break;
+        }
+        case SEARCH_MINIMAL_SPANNING_TREE_C: {
+          GetLeastSpanningTree();
+          break;
+        }
+        case SALESMAN_PROBLEM_C: {
+          SolveTravelingSalesmanProblem();
+          break;
+        }
+        default: {}
+  }
+}
+
+void Controller::LoadGraphFromFile() {
+  std::string filename;
+  view_-> HandleLoadGraph();
+  std::getline(std::cin, filename);
   graph_->LoadGraphFromFile(filename);
 }
 
@@ -10,32 +57,53 @@ void Controller::ExportGraphToDot(const std::string &filename) {
   graph_->ExportGraphToDot(filename);
 }
 
-vector<int> Controller::DepthFirstSearch(int start_vertex) {
-  return GraphAlgorithms::DepthFirstSearch(*graph_, start_vertex);
+void Controller::DepthFirstSearch() {
+  view_->HandleBreadthFirstTraversal();
+  int start_vertex;
+  cin >> start_vertex;
+  auto traversal = GraphAlgorithms::DepthFirstSearch(*graph_, start_vertex);
+  view_->DisplayTraversal(traversal);
 }
 
-vector<int> Controller::BreadthFirstSearch(int start_vertex) {
-  return GraphAlgorithms::BreadthFirstSearch(*graph_, start_vertex);
+void Controller::BreadthFirstSearch() {
+  view_->HandleDepthFirstTraversal();
+  int start_vertex;
+  cin >> start_vertex;
+  auto traversal = GraphAlgorithms::BreadthFirstSearch(*graph_, start_vertex);
+  view_->DisplayTraversal(traversal);
 }
 
-int Controller::GetShortestPathBetweenVertices(int vertex1, int vertex2) {
-  return GraphAlgorithms::GetShortestPathBetweenVertices(*graph_, vertex1,
-                                                         vertex2);
+void Controller::GetShortestPathBetweenVertices() {
+  int vertex1, vertex2;
+  view_->HandleShortestPathSearch(0);
+  cin >> vertex1;
+  view_->HandleShortestPathSearch(1);
+  cin >> vertex2;
+  auto shortest_path =
+      GraphAlgorithms::GetShortestPathBetweenVertices(*graph_, vertex1,
+                                                      vertex2);
+  view_->DisplayShortestPath(shortest_path);
 }
 
-vector<vector<int>> Controller::GetShortestPathsBetweenAllVertices() {
-  return GraphAlgorithms::GetShortestPathsBetweenAllVertices(*graph_);
+void Controller::GetShortestPathsBetweenAllVertices() {
+  auto shortest_paths = 
+      GraphAlgorithms::GetShortestPathsBetweenAllVertices(*graph_);
+  view_->DisplayShortestPaths(shortest_paths);
 }
 
-vector<vector<int>> Controller::GetLeastSpanningTree() {
-  return GraphAlgorithms::GetLeastSpanningTree(*graph_);
+void Controller::GetLeastSpanningTree() {
+  auto least_spanning_tree = GraphAlgorithms::GetLeastSpanningTree(*graph_);
+  view_->DisplayLeastSpanningTree(least_spanning_tree);
 }
 
-TsmResult Controller::SolveTravelingSalesmanProblem() {
+void Controller::SolveTravelingSalesmanProblem() {
   if (graph_->Size() == 0) {
     throw "empty graph";
   }
-  return GraphAlgorithms::SolveTravelingSalesmanProblem(*graph_);
+
+  auto tsm_result = 
+      GraphAlgorithms::SolveTravelingSalesmanProblem(*graph_);
+  view_->HandleTravelingSalesmanProblem(tsm_result);
 }
 
 }  // namespace s21
