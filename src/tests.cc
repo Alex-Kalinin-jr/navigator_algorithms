@@ -21,23 +21,23 @@ bool CompareVectorsContent(std::vector<int> &a, std::vector<int> &b) {
   return state;
 }
 
-bool CompareWithDirectAndReversedVector(std::vector<int> a, 
+bool CompareWithDirectAndReversedVector(std::vector<int> a,
                                         const std::vector<int> &b) {
 
-  std::cout<<std::endl<<":::::::::::::::::::::::::::::::::::::::::::::::::"<<std::endl;
+  std::cout << std::endl
+            << ":::::::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
   std::cout << "this is the vector a - result:::::::::::::" << std::endl;
   for (auto it : a) {
-    std::cout<<it<<"--";
+    std::cout << it << "--";
   }
-  std::cout<<std::endl;
+  std::cout << std::endl;
   bool state = false;
   std::cout << "this is the vector b - expected:::::::::::::" << std::endl;
   for (auto it : b) {
-    std::cout<<it<<"--";
+    std::cout << it << "--";
   }
-  std::cout<<std::endl<<":::::::::::::::::::::::::::::::::::::::::::::::::"<<std::endl;
-
-
+  std::cout << std::endl
+            << ":::::::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
 
   if (a == b) {
     state = true;
@@ -107,17 +107,19 @@ bool CompareWithDirectAndReversedVector(std::vector<int> a,
 // TEST(LoadGraphFromFile, WeightedDirectedGraph) {
 //   Graph test_graph;
 //   test_graph.LoadGraphFromFile("tests/examples/weighted_undirected_graph.txt");
-//   vector<vector<int>> excepted = {{0, 29, 20, 21, 16, 31, 100, 12, 4, 31, 18},
-//                                   {29, 0, 15, 29, 28, 40, 72, 21, 29, 41, 12},
-//                                   {20, 15, 0, 15, 14, 25, 81, 9, 23, 27, 13},
-//                                   {21, 29, 15, 0, 4, 12, 92, 12, 25, 13, 25},
-//                                   {16, 28, 14, 4, 0, 16, 94, 9, 20, 16, 22},
-//                                   {31, 40, 25, 12, 16, 0, 95, 24, 36, 3, 37},
-//                                   {100, 72, 81, 92, 94, 95, 0, 90, 101, 99, 84},
-//                                   {12, 21, 9, 12, 9, 24, 90, 0, 15, 25, 13},
-//                                   {4, 29, 23, 25, 20, 36, 101, 15, 0, 35, 18},
-//                                   {31, 41, 27, 13, 16, 3, 99, 25, 35, 0, 38},
-//                                   {18, 12, 13, 25, 22, 37, 84, 13, 18, 38, 0}};
+//   vector<vector<int>> excepted = {{0, 29, 20, 21, 16, 31, 100, 12, 4, 31,
+//   18},
+//                                   {29, 0, 15, 29, 28, 40, 72, 21, 29, 41,
+//                                   12}, {20, 15, 0, 15, 14, 25, 81, 9, 23, 27,
+//                                   13}, {21, 29, 15, 0, 4, 12, 92, 12, 25, 13,
+//                                   25}, {16, 28, 14, 4, 0, 16, 94, 9, 20, 16,
+//                                   22}, {31, 40, 25, 12, 16, 0, 95, 24, 36, 3,
+//                                   37}, {100, 72, 81, 92, 94, 95, 0, 90, 101,
+//                                   99, 84}, {12, 21, 9, 12, 9, 24, 90, 0, 15,
+//                                   25, 13}, {4, 29, 23, 25, 20, 36, 101, 15,
+//                                   0, 35, 18}, {31, 41, 27, 13, 16, 3, 99, 25,
+//                                   35, 0, 38}, {18, 12, 13, 25, 22, 37, 84,
+//                                   13, 18, 38, 0}};
 //   for (unsigned i = 0; i < excepted.size(); ++i)
 //     for (unsigned j = 0; j < excepted[i].size(); ++j) {
 //       EXPECT_EQ(excepted[i][j], test_graph.GetEdgeWeight(i, j));
@@ -368,11 +370,11 @@ TEST(SolveTravelingSalesmanProblem, wug2) {
   test_graph.LoadGraphFromFile("tests/examples/wug2.txt");
   result = GraphAlgorithms::SolveTravelingSalesmanProblem(test_graph);
 
-  s21::TsmResult expected = {{1, 3, 4, 2, 1}, 80};
+  s21::TsmResult expected = {{1, 3, 4, 2, 1}, 80, 0};
 
   // EXPECT_EQ(result.distance, expected.distance);
-  ASSERT_TRUE(CompareWithDirectAndReversedVector(result.vertices, 
-                                                expected.vertices));
+  ASSERT_TRUE(
+      CompareWithDirectAndReversedVector(result.vertices, expected.vertices));
 }
 
 // TEST(SolveTravelingSalesmanProblem, wug3) {
@@ -383,11 +385,10 @@ TEST(SolveTravelingSalesmanProblem, wug2) {
 
 //   s21::TsmResult expected = {{1, 5, 4, 3, 2, 1}, 99};
 
-  // EXPECT_EQ(result.distance, expected.distance);
-  // ASSERT_TRUE(CompareWithDirectAndReversedVector(result.vertices, 
-  //                                               expected.vertices));
+// EXPECT_EQ(result.distance, expected.distance);
+// ASSERT_TRUE(CompareWithDirectAndReversedVector(result.vertices,
+//                                               expected.vertices));
 // }
-
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

@@ -25,12 +25,7 @@ const int kInf = std::numeric_limits<int>::max();
 struct TsmResult {
   std::vector<int> vertices;
   double distance;
-};
-
-struct Ant {
-  vector<int> path;
-  // vector<bool> visited;
-  double path_length;
+  double quantity_;
 };
 
 class GraphAlgorithms {
@@ -51,11 +46,15 @@ public:
 
   // Part4
   static TsmResult SolveTravelingSalesmanProblem(const Graph &graph);
+
+private:
+  static double Random();
   //
   static double Eta(int i, int j, const Graph &graph);
   static vector<vector<double>> InitializePheromone(int n);
   static void UpdatePheromone(vector<vector<double>> &pheromone,
-                              const vector<TsmResult> &ants);
+                              const vector<TsmResult> &ants,
+                              const Graph &graph);
 
   static int SelectNext(const int current, const vector<bool> &visited,
                         const vector<vector<double>> &pheromone,
@@ -63,9 +62,6 @@ public:
   static TsmResult BuildTour(int start, vector<bool> &visited,
                              const vector<vector<double>> &pheromone,
                              const Graph &graph);
-  
-  private:
-    static double Random();
 };
 
 } // namespace s21
