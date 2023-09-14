@@ -286,8 +286,14 @@ TsmResult GraphAlgorithms::SolveTravelingSalesmanProblem(const Graph &graph) {
     std::vector<TsmResult> ants(kNumAnts);
     std::vector<TsmResult> succededAnts;
 
+    std::random_device rd;
+    std::default_random_engine engine(rd());
+    auto gen = std::bind(std::uniform_int_distribution<>(0, n - 2), engine);
+    
     for (int k = 0; k < kNumAnts; k++) {
-      int start = 0;
+      int start = gen();
+
+
       std::vector<bool> visited(n, false);
       ants[k] = BuildTour(start, visited, pheromone, graph);
       int size = ants[k].vertices.size();
