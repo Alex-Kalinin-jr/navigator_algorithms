@@ -53,9 +53,12 @@ void Controller::LoadGraphFromFile() {
   graph_->LoadGraphFromFile(filename);
 }
 
+
+//F*******************************************to be rewritten
 void Controller::ExportGraphToDot(const std::string &filename) {
   graph_->ExportGraphToDot(filename);
 }
+//F*******************************************to be rewritten
 
 void Controller::DepthFirstSearch() {
   view_->HandleBreadthFirstTraversal();
