@@ -21,34 +21,6 @@ bool CompareVectorsContent(std::vector<int> &a, std::vector<int> &b) {
   return state;
 }
 
-bool CompareWithDirectAndReversedVector(std::vector<int> a,
-                                        const std::vector<int> &b) {
-
-  std::cout << std::endl
-            << ":::::::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
-  std::cout << "this is the vector a - result:::::::::::::" << std::endl;
-  for (auto it : a) {
-    std::cout << it << "--";
-  }
-  std::cout << std::endl;
-  bool state = false;
-  std::cout << "this is the vector b - expected:::::::::::::" << std::endl;
-  for (auto it : b) {
-    std::cout << it << "--";
-  }
-  std::cout << std::endl
-            << ":::::::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
-
-  if (a == b) {
-    state = true;
-  }
-  std::reverse(std::begin(a), std::end(a));
-  if (a == b) {
-    state = true;
-  }
-  return state;
-}
-
 TEST(ExportGraphToDot, aa) {
   Graph test_graph;
   test_graph.LoadGraphFromFile(

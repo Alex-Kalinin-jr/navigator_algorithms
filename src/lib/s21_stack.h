@@ -35,7 +35,7 @@ public:
   const_reference top() const { return cont_.back(); }
   bool empty() const { return cont_.empty(); }
   size_type size() const { return cont_.size(); }
-  
+
   void push(const_reference value) { cont_.push_back(value); }
   void pop() { cont_.pop_back(); }
   void swap(Stack &other) { cont_.swap(other.cont_); }

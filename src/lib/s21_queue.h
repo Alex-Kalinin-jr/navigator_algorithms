@@ -34,7 +34,7 @@ public:
   const_reference front() const { return cont_.front(); }
   bool empty() const { return cont_.empty(); }
   size_type size() const { return cont_.size(); }
-  
+
   void push(const_reference value) { cont_.push_back(value); }
   void pop() { cont_.pop_front(); }
   void swap(Queue &other) { cont_.swap(other.cont_); }

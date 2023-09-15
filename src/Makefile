@@ -30,9 +30,6 @@ s21_graph.a: lib/s21_graph.a
 
 s21_graph_algorithms.a: lib/s21_graph_algorithms.a
 
-cppcheck:
-	cppcheck --language=c++ --std=c++17 --enable=all $(SRCFILES) $(LIBSRC) main.cc
-
 build: clean $(SRCOBJ) $(LIBSTATIC)
 	$(CC) $(SRCOBJ) $(LIBSTATIC) -o $(EXECUTABLE) $(LDFLAGS)
 
@@ -49,5 +46,5 @@ dvi:
 	$(OPEN) ./docs/manual.pdf
 
 style:
-	clang-format -i -style=file *.cc *.h lib/*.cc lib/*.h
+	-@clang-format -i -style=file *.cc lib/*.cc lib/*.h
 

@@ -1,0 +1,22 @@
+#ifndef NAVIGATOR_SRC_VIEW_CHOICE_H_
+#define NAVIGATOR_SRC_VIEW_CHOICE_H_
+
+namespace s21 {
+
+enum Choice {
+  EXIT_C,
+  LOAD_GRAPH_C,
+  BREADTH_TRAVERSAL_C,
+  DEAPTH_TRAVERSAL_C,
+  SEARCH_SHORTEST_PATH_C,
+  SEARCH_ALL_SHORTEST_PATHS_C,
+  SEARCH_MINIMAL_SPANNING_TREE_C,
+  SALESMAN_PROBLEM_C,
+  CHOICE_END
+};
+
+using Matrix=std::vector<std::vector<int>>;
+
+}  // namespace s21
+
+#endif  // NAVIGATOR_SRC_VIEW_CHOICE_H_

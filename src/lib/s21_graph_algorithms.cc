@@ -214,7 +214,7 @@ int GraphAlgorithms::SelectNext(const int current, const vector<bool> &visited,
   for (int i = 0; i < size; ++i) {
     if (!visited[i] && (graph.GetEdgeWeight(current, i) > 0)) {
       buff_attractivness = pow(pheromone[current][i], kAlpha) *
-                          pow(Eta(current, i, graph), kBeta) / sum;
+                           pow(Eta(current, i, graph), kBeta) / sum;
       if (buff_attractivness > answ_attractivness) {
         answ = i;
         answ_attractivness = buff_attractivness;

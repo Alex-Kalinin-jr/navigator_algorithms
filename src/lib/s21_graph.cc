@@ -56,7 +56,8 @@ void Graph::LoadGraphFromFile(std::string filename) {
   std::string buff_str;
   int vertex_number = 0;
   std::getline(file, buff_str);
-  if (sscanf(buff_str.c_str(), "%d", &vertex_number) != 1 || vertex_number <= 0) {
+  if (sscanf(buff_str.c_str(), "%d", &vertex_number) != 1 ||
+      vertex_number <= 0) {
     throw "loadgraphfromfile: wrong file";
   }
 
