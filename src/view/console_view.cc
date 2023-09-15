@@ -44,32 +44,19 @@ void ConsoleView::StartEventLoop() {
   }
 }
 
-int ConsoleView::GetUserChoice() {
+
+int ConsoleView::GetUserChoice(std::string message) {
+  std::cout << message <<std::endl;
   int choice;
-  cout << "Input a menu item digit: ";
   cin >> choice;
-  controller_->ReceiveSignal(choice);
   return choice;
 }
 
-void ConsoleView::HandleLoadGraph() {
-  cout << "Enter the filename: ";
-}
-
-void ConsoleView::HandleBreadthFirstTraversal() {
-  cout << "Enter the start vertex: ";
-}
-
-void ConsoleView::HandleDepthFirstTraversal() {
-  cout << "Enter the start vertex: ";
-}
-
-void ConsoleView::HandleShortestPathSearch(int type) {
-  if (type == 0) {
-    cout << "Enter the starting vertex: ";
-  } else {
-    cout << "Enter the ending vertex: ";
-  }
+  std::string GetString(std::string message) {
+  std::cout << message <<std::endl;
+  std::string filename;
+  std::getline(std::cin, filename);
+  return filename;
 }
 
 void ConsoleView::HandleTravelingSalesmanProblem(TsmResult &tsm_result) {

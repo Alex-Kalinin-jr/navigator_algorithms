@@ -25,14 +25,13 @@ class Controller {
   ConsoleView *view_;
 
   void LoadGraphFromFile();
-  void ExportGraphToDot(const std::string &filename);
+  void ExportGraphToDot();
   void DepthFirstSearch();
   void BreadthFirstSearch();
   void GetShortestPathBetweenVertices();
   void GetShortestPathsBetweenAllVertices();
   void GetLeastSpanningTree();
   void SolveTravelingSalesmanProblem();
-  void PrintMatrix() { graph_->PrintMatrix(); }
 };
 
 }  // namespace s21

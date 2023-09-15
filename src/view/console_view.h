@@ -13,12 +13,12 @@ class ConsoleView {
   ConsoleView(Controller* c) : controller_(c){};
   void StartEventLoop();
   void DisplayMenu();
-  int GetUserChoice();
+  int GetUserChoice(std::string);
+  std::string GetString(std::string);
 
-  void HandleLoadGraph();
-  void HandleBreadthFirstTraversal();
+
+
   void HandleDepthFirstTraversal();
-  void HandleShortestPathSearch(int);
   void HandleTravelingSalesmanProblem(TsmResult &);
 
   void DisplayTraversal(const std::vector<int>& traversal) const;

@@ -47,41 +47,30 @@ void Controller::ReceiveSignal(int choice) {
 }
 
 void Controller::LoadGraphFromFile() {
-  std::string filename;
-  view_-> HandleLoadGraph();
-  std::getline(std::cin, filename);
+  std::string filename = view_->GetString("Enter the filename:");
   graph_->LoadGraphFromFile(filename);
 }
 
-
-//F*******************************************to be rewritten
-void Controller::ExportGraphToDot(const std::string &filename) {
+void Controller::ExportGraphToDot() {
+  std::string filename = view_->GetString("Enter the filename:");
   graph_->ExportGraphToDot(filename);
 }
-//F*******************************************to be rewritten
 
 void Controller::DepthFirstSearch() {
-  view_->HandleBreadthFirstTraversal();
-  int start_vertex;
-  cin >> start_vertex;
+  int start_vertex = view_-> GetUserChoice("Enter the start vertex:");
   auto traversal = GraphAlgorithms::DepthFirstSearch(*graph_, start_vertex);
   view_->DisplayTraversal(traversal);
 }
 
 void Controller::BreadthFirstSearch() {
-  view_->HandleDepthFirstTraversal();
-  int start_vertex;
-  cin >> start_vertex;
+  int start_vertex = view_-> GetUserChoice("Enter the start vertex:");
   auto traversal = GraphAlgorithms::BreadthFirstSearch(*graph_, start_vertex);
   view_->DisplayTraversal(traversal);
 }
 
 void Controller::GetShortestPathBetweenVertices() {
-  int vertex1, vertex2;
-  view_->HandleShortestPathSearch(0);
-  cin >> vertex1;
-  view_->HandleShortestPathSearch(1);
-  cin >> vertex2;
+  int vertex1 = view_-> GetUserChoice("Enter the start vertex:");
+  int vertex2 = view_-> GetUserChoice("Enter the end vertex:");
   auto shortest_path =
       GraphAlgorithms::GetShortestPathBetweenVertices(*graph_, vertex1,
                                                       vertex2);
