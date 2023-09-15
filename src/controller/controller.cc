@@ -16,41 +16,51 @@ void Controller::ReceiveSignal(int choice) {
   switch ((Choice)choice) {
         case LOAD_GRAPH_C: {
           LoadGraphFromFile();
+          view_-> GetString("press any key to continue");
           break;
         }
         case BREADTH_TRAVERSAL_C: {
           DepthFirstSearch();
+          view_-> GetString("press any key to continue");
           break;
         }
         case DEAPTH_TRAVERSAL_C: {
           BreadthFirstSearch();
+          view_-> GetString("press any key to continue");
           break;
         }
         case SEARCH_SHORTEST_PATH_C: {
           GetShortestPathBetweenVertices();
+          view_-> GetString("press any key to continue");
           break;
         }
         case SEARCH_ALL_SHORTEST_PATHS_C: {
           GetShortestPathsBetweenAllVertices();
+          view_-> GetString("press any key to continue");
           break;
         }
         case SEARCH_MINIMAL_SPANNING_TREE_C: {
           GetLeastSpanningTree();
+          view_-> GetString("press any key to continue");
           break;
         }
         case SALESMAN_PROBLEM_C: {
           SolveTravelingSalesmanProblem();
+          view_-> GetString("press any key to continue");
           break;
         }
-        default: {
-          view_->ShowError("Invalid choice. Please try again.");
-        }
+        default: {}
   }
 }
 
 void Controller::LoadGraphFromFile() {
   std::string filename = view_->GetString("Enter the filename:");
-  graph_->LoadGraphFromFile(filename);
+  try {
+    graph_->LoadGraphFromFile(filename);
+    graph_->PrintMatrix();
+  } catch(...) {
+    view_->ShowError("File does'n loaded");
+  }
 }
 
 void Controller::ExportGraphToDot() {

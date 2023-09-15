@@ -8,10 +8,10 @@
 namespace s21 {
 
 void ConsoleView::StartEventLoop() const {
-  std::system("clear");
   int choice = CHOICE_END;
   while (true) {
     DisplayMenu();
+    std::cout << "choose mode: " << std::endl;
     std::cin >> choice;
     if (choice == EXIT_C) {
       break;
@@ -26,6 +26,7 @@ void ConsoleView::StartEventLoop() const {
 
 
 void ConsoleView::DisplayMenu() const {
+  system("clear");
   std::cout << "============" << std::endl;
   std::cout << "  M E N U   " << std::endl;
   std::cout << "============" << std::endl;
@@ -50,9 +51,9 @@ int ConsoleView::GetUserChoice(std::string message) const {
 
 
 std::string ConsoleView::GetString(std::string message) const {
-  std::cout << message <<std::endl;
+  std::cout << message << std::endl;
   std::string filename;
-  std::getline(std::cin, filename);
+  std::cin >> filename;
   return filename;
 }
 
