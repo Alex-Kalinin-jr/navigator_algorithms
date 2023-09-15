@@ -45,12 +45,14 @@ void ConsoleView::DisplayMenu() const {
 int ConsoleView::GetUserChoice(std::string message) const {
   std::cout << message <<std::endl;
   int choice;
+  std::cin.clear();
   std::cin >> choice;
   return choice;
 }
 
 
 std::string ConsoleView::GetString(std::string message) const {
+  std::cin.clear();
   std::cout << message << std::endl;
   std::string filename;
   std::cin >> filename;

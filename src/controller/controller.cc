@@ -84,40 +84,53 @@ void Controller::DepthFirstSearch() {
 
 void Controller::BreadthFirstSearch() {
   int start_vertex = view_-> GetUserChoice("Enter the start vertex:");
-  auto traversal = GraphAlgorithms::BreadthFirstSearch(*graph_, start_vertex);
-  view_->DisplayTraversal(traversal);
+  try {
+    auto traversal = GraphAlgorithms::BreadthFirstSearch(*graph_, start_vertex);
+    view_->DisplayTraversal(traversal);
+  } catch (...) {
+    view_->ShowError("Error. Is graph loaded? Is vertex correct?");
+  }
 }
 
 void Controller::GetShortestPathBetweenVertices() {
   int vertex1 = view_-> GetUserChoice("Enter the start vertex:");
   int vertex2 = view_-> GetUserChoice("Enter the end vertex:");
-  auto shortest_path =
-      GraphAlgorithms::GetShortestPathBetweenVertices(*graph_, vertex1,
-                                                      vertex2);
-  view_->DisplayShortestPath(shortest_path);
+  try {
+    auto shortest_path =
+        GraphAlgorithms::GetShortestPathBetweenVertices(*graph_, vertex1,
+                                                        vertex2);
+    view_->DisplayShortestPath(shortest_path);
+  } catch (...) {
+    view_->ShowError("Error. Is graph loaded? Is vertex correct?");
+  }
 }
 
 void Controller::GetShortestPathsBetweenAllVertices() {
-  auto shortest_paths = 
-      GraphAlgorithms::GetShortestPathsBetweenAllVertices(*graph_);
-  view_->DisplayShortestPaths(shortest_paths);
+  try {
+    auto shortest_paths = 
+        GraphAlgorithms::GetShortestPathsBetweenAllVertices(*graph_);
+    view_->DisplayShortestPaths(shortest_paths);
+  } catch (...) {
+    view_->ShowError("Error. Is graph loaded? Is vertex correct?");
+  }
 }
 
 void Controller::GetLeastSpanningTree() {
-  auto least_spanning_tree = GraphAlgorithms::GetLeastSpanningTree(*graph_);
-  view_->DisplayLeastSpanningTree(least_spanning_tree);
+  try {
+    auto least_spanning_tree = GraphAlgorithms::GetLeastSpanningTree(*graph_);
+    view_->DisplayLeastSpanningTree(least_spanning_tree);
+  } catch (...) {
+    view_->ShowError("Error. Is graph loaded? Is vertex correct?");
+  }
 }
 
 void Controller::SolveTravelingSalesmanProblem() {
-  if (graph_->Size() == 0) {
-    view_->ShowError("Maybe you forgot to load file?");
-  }
   try {
     auto tsm_result = 
         GraphAlgorithms::SolveTravelingSalesmanProblem(*graph_);
     view_->HandleTravelingSalesmanProblem(tsm_result);
   } catch(...) {
-    view_->ShowError("some errors occured.");
+    view_->ShowError("Error. Is graph loaded? Is vertex correct?");
   }
 }
 
