@@ -42,7 +42,9 @@ void Controller::ReceiveSignal(int choice) {
           SolveTravelingSalesmanProblem();
           break;
         }
-        default: {}
+        default: {
+          view_->ShowError("Invalid choice. Please try again.");
+        }
   }
 }
 

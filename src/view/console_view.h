@@ -1,5 +1,5 @@
-#ifndef SRC_VIEW_CONSOLE_VIEW_H_
-#define SRC_VIEW_CONSOLE_VIEW_H_
+#ifndef NAVIGATOR_SRC_VIEW_CONSOLE_VIEW_H_
+#define NAVIGATOR_SRC_VIEW_CONSOLE_VIEW_H_
 
 #include "../controller/controller.h"
 #include "choice.h"
@@ -31,4 +31,4 @@ class ConsoleView {
 
 }  // namespace s21
 
-#endif  // SRC_VIEW_CONSOLE_VIEW_H_
+#endif  // NAVIGATOR_SRC_VIEW_CONSOLE_VIEW_H_
