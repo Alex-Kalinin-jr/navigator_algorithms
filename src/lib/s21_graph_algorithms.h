@@ -25,7 +25,7 @@ const int kInf = std::numeric_limits<int>::max();
 
 struct TsmResult {
   std::vector<int> vertices;
-  double distance;
+  double distance = -1;
   double quantity_;
 };
 

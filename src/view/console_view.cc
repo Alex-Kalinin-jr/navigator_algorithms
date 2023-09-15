@@ -64,10 +64,14 @@ void ConsoleView::ShowError(std::string error) {
 }
 
 void ConsoleView::HandleTravelingSalesmanProblem(TsmResult &tsm_result) const {
-    std::cout << "Shortest tour distance: " << tsm_result.distance << std::endl;
-    std::cout << "Tour vertices: ";
-    for (int vertex : tsm_result.vertices) {
-      std::cout << vertex << " ";
+    if (std::numeric_limits<double>::max() == tsm_result.distance) {
+      std::cout << "path not found";
+    } else {
+      std::cout << "Shortest tour distance: " << tsm_result.distance << std::endl;
+      std::cout << "Tour vertices: ";
+      for (int vertex : tsm_result.vertices) {
+        std::cout << vertex << " ";
+      }
     }
     std::cout << std::endl;
 }

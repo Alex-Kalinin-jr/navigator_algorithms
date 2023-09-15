@@ -82,6 +82,10 @@ vector<int> GraphAlgorithms::BreadthFirstSearch(const Graph &graph, int start) {
 int GraphAlgorithms::GetShortestPathBetweenVertices(const Graph &graph,
                                                     const int vertex1,
                                                     const int vertex2) {
+  if (vertex1 < 1 || vertex1 > graph.Size() ||
+      vertex2 < 1 || vertex2 > graph.Size()) {
+        throw "";
+      }
   vector<int> distance(graph.Size(), kInf);
   vector<bool> visited(graph.Size(), false);
   Queue<int> vertexQueue;

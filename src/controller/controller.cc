@@ -75,7 +75,7 @@ void Controller::ExportGraphToDot() {
 void Controller::DepthFirstSearch() {
   int start_vertex = view_-> GetUserChoice("Enter the start vertex:");
   try {
-    auto traversal = GraphAlgorithms::DepthFirstSearch(*graph_, start_vertex);
+    auto traversal = GraphAlgorithms::DepthFirstSearch(*graph_, start_vertex - 1);
     view_->DisplayTraversal(traversal);
   } catch (...) {
     view_->ShowError("Error. Is graph loaded? Is vertex correct?");
@@ -85,7 +85,7 @@ void Controller::DepthFirstSearch() {
 void Controller::BreadthFirstSearch() {
   int start_vertex = view_-> GetUserChoice("Enter the start vertex:");
   try {
-    auto traversal = GraphAlgorithms::BreadthFirstSearch(*graph_, start_vertex);
+    auto traversal = GraphAlgorithms::BreadthFirstSearch(*graph_, start_vertex - 1);
     view_->DisplayTraversal(traversal);
   } catch (...) {
     view_->ShowError("Error. Is graph loaded? Is vertex correct?");
