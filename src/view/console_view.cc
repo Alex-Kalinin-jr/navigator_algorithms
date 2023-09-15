@@ -35,7 +35,7 @@ void ConsoleView::StartEventLoop() {
     if (choice == EXIT_C) {
       break;
     }
-    if (choice > SALESMAN_PROBLEM_C && choice < EXIT_C) {
+    if (choice >= CHOICE_END && choice < EXIT_C) {
       cout << "Invalid choice. Please try again." << endl;
       continue;
     }
