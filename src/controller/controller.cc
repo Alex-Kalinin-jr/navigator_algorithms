@@ -65,13 +65,21 @@ void Controller::LoadGraphFromFile() {
 
 void Controller::ExportGraphToDot() {
   std::string filename = view_->GetString("Enter the filename:");
-  graph_->ExportGraphToDot(filename);
+  try {
+    graph_->ExportGraphToDot(filename);
+  } catch (...) {
+    view_->ShowError("Error. Is graph loaded?");
+  }
 }
 
 void Controller::DepthFirstSearch() {
   int start_vertex = view_-> GetUserChoice("Enter the start vertex:");
-  auto traversal = GraphAlgorithms::DepthFirstSearch(*graph_, start_vertex);
-  view_->DisplayTraversal(traversal);
+  try {
+    auto traversal = GraphAlgorithms::DepthFirstSearch(*graph_, start_vertex);
+    view_->DisplayTraversal(traversal);
+  } catch (...) {
+    view_->ShowError("Error. Is graph loaded? Is vertex correct?");
+  }
 }
 
 void Controller::BreadthFirstSearch() {

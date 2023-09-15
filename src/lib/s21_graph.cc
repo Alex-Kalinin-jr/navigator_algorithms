@@ -63,11 +63,6 @@ void Graph::LoadGraphFromFile(std::string filename) {
   vector<vector<int>> adjacencyMatrix;
   int buffVal = 0;
   while (std::getline(file, buffStr)) {
-    int i = 1;
-    while (*(buffStr.end() - i) == ' ') {
-      *(buffStr.end() - i) = '\0';
-      ++i;
-    }
     CheckLineCorrectness(buffStr);
     std::istringstream stream(buffStr);
     std::vector<int> buffVectr;
