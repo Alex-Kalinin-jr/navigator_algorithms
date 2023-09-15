@@ -11,21 +11,19 @@ class Controller;
 class ConsoleView {
  public:
   ConsoleView(Controller* c) : controller_(c){};
-  void StartEventLoop();
-  void DisplayMenu();
-  int GetUserChoice(std::string);
-  std::string GetString(std::string);
+  // interactions with user
+  void StartEventLoop() const;
+  void DisplayMenu() const;
+  int GetUserChoice(std::string) const;
+  std::string GetString(std::string) const;
+  void ShowError(std::string);
 
-
-
-  void HandleDepthFirstTraversal();
-  void HandleTravelingSalesmanProblem(TsmResult &);
-
+  // actions after interaction
+  void HandleTravelingSalesmanProblem(TsmResult &) const;
   void DisplayTraversal(const std::vector<int>& traversal) const;
   void DisplayShortestPath(const int& shortest_path) const;
-  void DisplayShortestPaths(
-      const std::vector<std::vector<int>>& shortest_paths) const;
-  void DisplayLeastSpanningTree(const std::vector<std::vector<int>>& tree);
+  void DisplayShortestPaths(const Matrix& shortest_paths) const;
+  void DisplayLeastSpanningTree(const Matrix& tree) const;
 
  private:
   Controller* controller_;

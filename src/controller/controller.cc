@@ -90,12 +90,15 @@ void Controller::GetLeastSpanningTree() {
 
 void Controller::SolveTravelingSalesmanProblem() {
   if (graph_->Size() == 0) {
-    throw "empty graph";
+    view_->ShowError("Maybe you forgot to load file?");
   }
-
-  auto tsm_result = 
-      GraphAlgorithms::SolveTravelingSalesmanProblem(*graph_);
-  view_->HandleTravelingSalesmanProblem(tsm_result);
+  try {
+    auto tsm_result = 
+        GraphAlgorithms::SolveTravelingSalesmanProblem(*graph_);
+    view_->HandleTravelingSalesmanProblem(tsm_result);
+  } catch(...) {
+    view_->ShowError("some errors occured.");
+  }
 }
 
 }  // namespace s21
