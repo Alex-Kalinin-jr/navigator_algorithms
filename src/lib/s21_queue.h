@@ -1,5 +1,5 @@
-#ifndef SRC_LIB_S21_QUEUE_H_
-#define SRC_LIB_S21_QUEUE_H_
+#ifndef NAVIGATOR_SRC_LIB_S21_QUEUE_H_
+#define NAVIGATOR_SRC_LIB_S21_QUEUE_H_
 
 #include <initializer_list>
 #include <list>
@@ -34,11 +34,11 @@ public:
   const_reference front() const { return cont_.front(); }
   bool empty() const { return cont_.empty(); }
   size_type size() const { return cont_.size(); }
+  
   void push(const_reference value) { cont_.push_back(value); }
   void pop() { cont_.pop_front(); }
   void swap(Queue &other) { cont_.swap(other.cont_); }
 
-  // is not tested
   template <class... Args> void emplace_back(Args &&...args) {
     cont_.emplace_back(args...);
   }
@@ -49,4 +49,4 @@ private:
 
 } // namespace s21
 
-#endif // SRC_LIB_S21_QUEUE_H_
+#endif // NAVIGATOR_SRC_LIB_S21_QUEUE_H_

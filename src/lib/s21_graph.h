@@ -1,5 +1,5 @@
-#ifndef SRC_LIB_S21_GRAPH_H_
-#define SRC_LIB_S21_GRAPH_H_
+#ifndef NAVIGATOR_SRC_LIB_S21_GRAPH_H_
+#define NAVIGATOR_SRC_LIB_S21_GRAPH_H_
 
 #include <iostream>
 #include <string>
@@ -34,4 +34,4 @@ private:
 
 } // namespace s21
 
-#endif // SRC_LIB_S21_GRAPH_H_
+#endif // NAVIGATOR_SRC_LIB_S21_GRAPH_H_

@@ -53,29 +53,29 @@ void Graph::LoadGraphFromFile(std::string filename) {
     throw "loadgraphfromfile: wrong file";
   }
 
-  std::string buffStr;
-  int vertexNumber = 0;
-  std::getline(file, buffStr);
-  if (sscanf(buffStr.c_str(), "%d", &vertexNumber) != 1 || vertexNumber <= 0) {
+  std::string buff_str;
+  int vertex_number = 0;
+  std::getline(file, buff_str);
+  if (sscanf(buff_str.c_str(), "%d", &vertex_number) != 1 || vertex_number <= 0) {
     throw "loadgraphfromfile: wrong file";
   }
 
-  vector<vector<int>> adjacencyMatrix;
-  int buffVal = 0;
-  while (std::getline(file, buffStr)) {
-    CheckLineCorrectness(buffStr);
-    std::istringstream stream(buffStr);
-    std::vector<int> buffVectr;
+  vector<vector<int>> adjacency_matrix;
+  int buff_val = 0;
+  while (std::getline(file, buff_str)) {
+    CheckLineCorrectness(buff_str);
+    std::istringstream stream(buff_str);
+    std::vector<int> buff_vectr;
     while (!stream.eof()) {
-      stream >> buffVal;
-      buffVectr.push_back(buffVal);
+      stream >> buff_val;
+      buff_vectr.push_back(buff_val);
     }
-    adjacencyMatrix.push_back(buffVectr);
+    adjacency_matrix.push_back(buff_vectr);
   }
   file.close();
 
-  CheckCorrectness(adjacencyMatrix, vertexNumber);
-  adjacency_matrix_ = adjacencyMatrix;
+  CheckCorrectness(adjacency_matrix, vertex_number);
+  adjacency_matrix_ = adjacency_matrix;
 }
 
 void Graph::CheckCorrectness(vector<vector<int>> &vctr, const int &size) const {
@@ -90,8 +90,8 @@ void Graph::CheckCorrectness(vector<vector<int>> &vctr, const int &size) const {
   });
 }
 
-void Graph::CheckLineCorrectness(const std::string &buffLine) const {
-  std::for_each(buffLine.begin(), buffLine.end(), [](const char &a) {
+void Graph::CheckLineCorrectness(const std::string &buff_line) const {
+  std::for_each(buff_line.begin(), buff_line.end(), [](const char &a) {
     if (a != ' ' && a != 9 && a != '-' && (a > 57 || a < 48)) {
       throw "loadgraphfromfile: wrong file";
     }

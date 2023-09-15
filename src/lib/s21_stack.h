@@ -1,5 +1,5 @@
-#ifndef SRC_LIB_S21_STACK_H_
-#define SRC_LIB_S21_STACK_H_
+#ifndef NAVIGATOR_SRC_LIB_S21_STACK_H_
+#define NAVIGATOR_SRC_LIB_S21_STACK_H_
 
 #include <initializer_list>
 #include <list>
@@ -35,11 +35,11 @@ public:
   const_reference top() const { return cont_.back(); }
   bool empty() const { return cont_.empty(); }
   size_type size() const { return cont_.size(); }
+  
   void push(const_reference value) { cont_.push_back(value); }
   void pop() { cont_.pop_back(); }
   void swap(Stack &other) { cont_.swap(other.cont_); }
 
-  // is not tested
   template <class... Args> void emplace_front(Args &&...args) {
     cont_.emplace_back(args...);
   }
@@ -50,4 +50,4 @@ private:
 
 } // namespace s21
 
-#endif // SRC_LIB_S21_STACK_H_
+#endif // NAVIGATOR_SRC_LIB_S21_STACK_H_

@@ -1,8 +1,10 @@
 #include "controller.h"
-#include "../view/console_view.h"
 
 #include <string>
 #include <iostream>
+
+#include "../view/console_view.h"
+
 
 namespace s21 {
 

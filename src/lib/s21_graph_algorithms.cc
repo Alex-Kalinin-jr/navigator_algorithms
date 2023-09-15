@@ -4,7 +4,6 @@
 #include <cmath>
 #include <exception>
 #include <functional>
-#include <iostream>
 #include <numeric>
 #include <random>
 #include <vector>
@@ -12,19 +11,19 @@
 namespace s21 {
 
 vector<int> GraphAlgorithms::DepthFirstSearch(const Graph &graph,
-                                              const int startVertex) {
-  if (startVertex >= graph.Size()) {
+                                              const int start_vertex) {
+  if (start_vertex >= graph.Size()) {
     throw "invalid argument";
   }
   vector<bool> visited(graph.Size(), false);
   vector<int> traversed;
-  Stack<int> vertexStack;
+  Stack<int> vertex_stack;
 
-  vertexStack.push(startVertex);
+  vertex_stack.push(start_vertex);
 
-  while (!vertexStack.empty()) {
-    int vertex = vertexStack.top();
-    vertexStack.pop();
+  while (!vertex_stack.empty()) {
+    int vertex = vertex_stack.top();
+    vertex_stack.pop();
 
     if (!visited[vertex]) {
       visited[vertex] = true;
@@ -32,7 +31,7 @@ vector<int> GraphAlgorithms::DepthFirstSearch(const Graph &graph,
 
       for (int neighbor : graph.NeighborsFromEnd(vertex)) {
         if (!visited[neighbor]) {
-          vertexStack.push(neighbor);
+          vertex_stack.push(neighbor);
         }
       }
     }
@@ -53,12 +52,12 @@ vector<int> GraphAlgorithms::BreadthFirstSearch(const Graph &graph, int start) {
   vector<bool> visited(graph.Size(), false);
   vector<int> traversed;
 
-  Queue<int> vertexQueue;
-  vertexQueue.push(start);
+  Queue<int> vertex_queue;
+  vertex_queue.push(start);
 
-  while (!vertexQueue.empty()) {
-    int vertex = vertexQueue.front();
-    vertexQueue.pop();
+  while (!vertex_queue.empty()) {
+    int vertex = vertex_queue.front();
+    vertex_queue.pop();
 
     if (!visited[vertex]) {
       visited[vertex] = true;
@@ -66,7 +65,7 @@ vector<int> GraphAlgorithms::BreadthFirstSearch(const Graph &graph, int start) {
 
       for (int neighbor : graph.Neighbors(vertex)) {
         if (!visited[neighbor]) {
-          vertexQueue.push(neighbor);
+          vertex_queue.push(neighbor);
         }
       }
     }
@@ -82,20 +81,20 @@ vector<int> GraphAlgorithms::BreadthFirstSearch(const Graph &graph, int start) {
 int GraphAlgorithms::GetShortestPathBetweenVertices(const Graph &graph,
                                                     const int vertex1,
                                                     const int vertex2) {
-  if (vertex1 < 1 || vertex1 > graph.Size() ||
-      vertex2 < 1 || vertex2 > graph.Size()) {
-        throw "";
-      }
+  if (vertex1 < 1 || vertex1 > graph.Size() || vertex2 < 1 ||
+      vertex2 > graph.Size()) {
+    throw "";
+  }
   vector<int> distance(graph.Size(), kInf);
   vector<bool> visited(graph.Size(), false);
-  Queue<int> vertexQueue;
+  Queue<int> vertex_queue;
 
   distance[vertex1 - 1] = 0;
-  vertexQueue.push(vertex1 - 1);
+  vertex_queue.push(vertex1 - 1);
 
-  while (!vertexQueue.empty()) {
-    int i = vertexQueue.front();
-    vertexQueue.pop();
+  while (!vertex_queue.empty()) {
+    int i = vertex_queue.front();
+    vertex_queue.pop();
 
     if (visited[i]) {
       continue;
@@ -106,7 +105,7 @@ int GraphAlgorithms::GetShortestPathBetweenVertices(const Graph &graph,
       int new_distance = distance[i] + graph.GetEdgeWeight(i, j);
       if (new_distance < distance[j]) {
         distance[j] = new_distance;
-        vertexQueue.push(j);
+        vertex_queue.push(j);
       }
     }
   }
@@ -146,52 +145,49 @@ vector<vector<int>> GraphAlgorithms::GetLeastSpanningTree(const Graph &graph) {
   vector<int> distances(size, kInf);
   vector<int> parents(size, -1);
 
-  vector<vector<int>> spanningTree(size, vector<int>(size, 0));
+  vector<vector<int>> spanning_tree(size, vector<int>(size, 0));
 
   distances[0] = 0;
 
   for (int i = 0; i < size - 1; ++i) {
-    int minDistance = kInf;
-    int minVertex = -1;
+    int min_distance = kInf;
+    int min_vertex = -1;
 
     for (int j = 0; j < size; ++j) {
-      if (!visited[j] && distances[j] < minDistance) {
-        minDistance = distances[j];
-        minVertex = j;
+      if (!visited[j] && distances[j] < min_distance) {
+        min_distance = distances[j];
+        min_vertex = j;
       }
     }
 
-    visited[minVertex] = true;
+    visited[min_vertex] = true;
 
-    if (parents[minVertex] != -1) {
-      spanningTree[parents[minVertex]][minVertex] =
-          graph.GetEdgeWeight(parents[minVertex], minVertex);
-      spanningTree[minVertex][parents[minVertex]] =
-          graph.GetEdgeWeight(parents[minVertex], minVertex);
+    if (parents[min_vertex] != -1) {
+      spanning_tree[parents[min_vertex]][min_vertex] =
+          graph.GetEdgeWeight(parents[min_vertex], min_vertex);
+      spanning_tree[min_vertex][parents[min_vertex]] =
+          graph.GetEdgeWeight(parents[min_vertex], min_vertex);
     }
 
     for (int j = 0; j < size; ++j) {
-      if (!visited[j] && graph.GetEdgeWeight(minVertex, j) > 0 &&
-          graph.GetEdgeWeight(minVertex, j) < distances[j]) {
-        parents[j] = minVertex;
-        distances[j] = graph.GetEdgeWeight(minVertex, j);
+      if (!visited[j] && graph.GetEdgeWeight(min_vertex, j) > 0 &&
+          graph.GetEdgeWeight(min_vertex, j) < distances[j]) {
+        parents[j] = min_vertex;
+        distances[j] = graph.GetEdgeWeight(min_vertex, j);
       }
     }
   }
 
-  return spanningTree;
+  return spanning_tree;
 }
 
-//********************************************************************
 vector<vector<double>> GraphAlgorithms::InitializePheromone(int n) {
   return vector<vector<double>>(n, vector<double>(n, kInitialPheromone));
 }
 
-
 double GraphAlgorithms::Eta(int i, int j, const Graph &graph) {
   return 1.0 / (graph.GetEdgeWeight(i, j));
 }
-
 
 double GraphAlgorithms::Random() {
   std::random_device rd;
@@ -200,12 +196,11 @@ double GraphAlgorithms::Random() {
   return static_cast<double>(gen());
 }
 
-
 int GraphAlgorithms::SelectNext(const int current, const vector<bool> &visited,
                                 const vector<vector<double>> &pheromone,
                                 const Graph &graph) {
   int answ = -1;
-  double answAttractivness = 0.0;
+  double answ_attractivness = 0.0;
   int size = visited.size();
   double sum = 0.0;
   for (int i = 0; i < size; ++i) {
@@ -215,49 +210,45 @@ int GraphAlgorithms::SelectNext(const int current, const vector<bool> &visited,
     }
   }
 
-  double buffAttractivness = 0.0;
+  double buff_attractivness = 0.0;
   for (int i = 0; i < size; ++i) {
     if (!visited[i] && (graph.GetEdgeWeight(current, i) > 0)) {
-      buffAttractivness = pow(pheromone[current][i], kAlpha) *
+      buff_attractivness = pow(pheromone[current][i], kAlpha) *
                           pow(Eta(current, i, graph), kBeta) / sum;
-      if (buffAttractivness > answAttractivness) {
+      if (buff_attractivness > answ_attractivness) {
         answ = i;
-        answAttractivness = buffAttractivness;
+        answ_attractivness = buff_attractivness;
       }
     }
   }
   return answ;
 }
 
-
 void GraphAlgorithms::UpdatePheromone(vector<vector<double>> &pheromone,
                                       const vector<Ant> &ants,
                                       const Graph &graph) {
-for (auto & start : pheromone) {
-  for (auto & road: start) {
-    road *= kRHO;
+  for (auto &start : pheromone) {
+    for (auto &road : start) {
+      road *= kRHO;
+    }
   }
-}
 
   for (auto &ant : ants) {
-    for (auto itr = ant.antResult_.vertices.begin(); 
-          itr != ant.antResult_.vertices.end() - 1;
-         ++itr) {
+    for (auto itr = ant.ant_result_.vertices.begin();
+         itr != ant.ant_result_.vertices.end() - 1; ++itr) {
       int start = *itr;
       int end = *(itr + 1);
-      pheromone[start][end] +=
-          ant.quantity_ / graph.GetEdgeWeight(start, end);
+      pheromone[start][end] += ant.quantity_ / graph.GetEdgeWeight(start, end);
     }
   }
 }
 
-
 Ant GraphAlgorithms::BuildTour(int start, vector<bool> &visited,
-                                     const vector<vector<double>> &pheromone,
-                                     const Graph &graph) {
+                               const vector<vector<double>> &pheromone,
+                               const Graph &graph) {
   Ant ant;
-  ant.antResult_.vertices.push_back(start);
-  ant.antResult_.distance = 0.0;
+  ant.ant_result_.vertices.push_back(start);
+  ant.ant_result_.distance = 0.0;
   visited[start] = true;
   int current = start;
   int size = visited.size();
@@ -266,22 +257,21 @@ Ant GraphAlgorithms::BuildTour(int start, vector<bool> &visited,
     if (next == -1) {
       break;
     }
-    ant.antResult_.vertices.push_back(next);
-    ant.antResult_.distance += graph.GetEdgeWeight(current, next);
+    ant.ant_result_.vertices.push_back(next);
+    ant.ant_result_.distance += graph.GetEdgeWeight(current, next);
     ant.quantity_ += pheromone[current][next];
     visited[next] = true;
     current = next;
   }
 
   if (graph.GetEdgeWeight(current, start) > 0) {
-    ant.antResult_.vertices.push_back(start);
-    ant.antResult_.distance += graph.GetEdgeWeight(current, start);
+    ant.ant_result_.vertices.push_back(start);
+    ant.ant_result_.distance += graph.GetEdgeWeight(current, start);
     ant.quantity_ += pheromone[current][start];
   }
 
   return ant;
 }
-
 
 TsmResult GraphAlgorithms::SolveTravelingSalesmanProblem(const Graph &graph) {
   int n = graph.Size();
@@ -291,7 +281,7 @@ TsmResult GraphAlgorithms::SolveTravelingSalesmanProblem(const Graph &graph) {
   for (int iter = 0; iter < kNumIterations; iter++) {
 
     std::vector<Ant> ants(kNumAnts);
-    std::vector<Ant> succededAnts;
+    std::vector<Ant> succeded_ants;
 
     std::random_device rd;
     std::default_random_engine engine(rd());
@@ -300,18 +290,17 @@ TsmResult GraphAlgorithms::SolveTravelingSalesmanProblem(const Graph &graph) {
     for (int k = 0; k < kNumAnts; k++) {
       int start = gen();
 
-
       std::vector<bool> visited(n, false);
       ants[k] = BuildTour(start, visited, pheromone, graph);
-      int size = ants[k].antResult_.vertices.size();
+      int size = ants[k].ant_result_.vertices.size();
       if (size == (n + 1)) {
-        succededAnts.push_back(ants[k]);
-        if (ants[k].antResult_.distance <= best_result.distance) {
-          best_result = ants[k].antResult_;
+        succeded_ants.push_back(ants[k]);
+        if (ants[k].ant_result_.distance <= best_result.distance) {
+          best_result = ants[k].ant_result_;
         }
       }
     }
-    UpdatePheromone(pheromone, succededAnts, graph);
+    UpdatePheromone(pheromone, succeded_ants, graph);
   }
 
   std::for_each(best_result.vertices.begin(), best_result.vertices.end(),

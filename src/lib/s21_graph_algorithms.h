@@ -1,5 +1,5 @@
-#ifndef SRC_LIB_S21_GRAPH_ALGORITHMS_H_
-#define SRC_LIB_S21_GRAPH_ALGORITHMS_H_
+#ifndef NAVIGATOR_SRC_LIB_S21_GRAPH_ALGORITHMS_H_
+#define NAVIGATOR_SRC_LIB_S21_GRAPH_ALGORITHMS_H_
 
 #include <limits>
 #include <string>
@@ -29,10 +29,9 @@ struct TsmResult {
 };
 
 struct Ant {
-  TsmResult antResult_;
+  TsmResult ant_result_;
   double quantity_;
 };
-
 
 class GraphAlgorithms {
 public:
@@ -58,17 +57,16 @@ private:
   static double Eta(int i, int j, const Graph &graph);
   static vector<vector<double>> InitializePheromone(int n);
   static void UpdatePheromone(vector<vector<double>> &pheromone,
-                              const vector<Ant> &ants,
-                              const Graph &graph);
+                              const vector<Ant> &ants, const Graph &graph);
 
   static int SelectNext(const int current, const vector<bool> &visited,
                         const vector<vector<double>> &pheromone,
                         const Graph &graph);
   static Ant BuildTour(int start, vector<bool> &visited,
-                             const vector<vector<double>> &pheromone,
-                             const Graph &graph);
+                       const vector<vector<double>> &pheromone,
+                       const Graph &graph);
 };
 
 } // namespace s21
 
-#endif // SRC_LIB_S21_GRAPH_ALGORITHMS_H_
+#endif // NAVIGATOR_SRC_LIB_S21_GRAPH_ALGORITHMS_H_
