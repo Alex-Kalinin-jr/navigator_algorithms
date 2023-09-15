@@ -182,7 +182,7 @@ vector<vector<int>> GraphAlgorithms::GetLeastSpanningTree(const Graph &graph) {
   return spanningTree;
 }
 
-
+//********************************************************************
 vector<vector<double>> GraphAlgorithms::InitializePheromone(int n) {
   return vector<vector<double>>(n, vector<double>(n, kInitialPheromone));
 }
@@ -231,7 +231,7 @@ int GraphAlgorithms::SelectNext(const int current, const vector<bool> &visited,
 
 
 void GraphAlgorithms::UpdatePheromone(vector<vector<double>> &pheromone,
-                                      const vector<TsmResult> &ants,
+                                      const vector<Ant> &ants,
                                       const Graph &graph) {
 for (auto & start : pheromone) {
   for (auto & road: start) {
@@ -240,7 +240,8 @@ for (auto & start : pheromone) {
 }
 
   for (auto &ant : ants) {
-    for (auto itr = ant.vertices.begin(); itr != ant.vertices.end() - 1;
+    for (auto itr = ant.antResult_.vertices.begin(); 
+          itr != ant.antResult_.vertices.end() - 1;
          ++itr) {
       int start = *itr;
       int end = *(itr + 1);
@@ -251,12 +252,12 @@ for (auto & start : pheromone) {
 }
 
 
-TsmResult GraphAlgorithms::BuildTour(int start, vector<bool> &visited,
+Ant GraphAlgorithms::BuildTour(int start, vector<bool> &visited,
                                      const vector<vector<double>> &pheromone,
                                      const Graph &graph) {
-  TsmResult ant;
-  ant.vertices.push_back(start);
-  ant.distance = 0.0;
+  Ant ant;
+  ant.antResult_.vertices.push_back(start);
+  ant.antResult_.distance = 0.0;
   visited[start] = true;
   int current = start;
   int size = visited.size();
@@ -265,16 +266,16 @@ TsmResult GraphAlgorithms::BuildTour(int start, vector<bool> &visited,
     if (next == -1) {
       break;
     }
-    ant.vertices.push_back(next);
-    ant.distance += graph.GetEdgeWeight(current, next);
+    ant.antResult_.vertices.push_back(next);
+    ant.antResult_.distance += graph.GetEdgeWeight(current, next);
     ant.quantity_ += pheromone[current][next];
     visited[next] = true;
     current = next;
   }
 
   if (graph.GetEdgeWeight(current, start) > 0) {
-    ant.vertices.push_back(start);
-    ant.distance += graph.GetEdgeWeight(current, start);
+    ant.antResult_.vertices.push_back(start);
+    ant.antResult_.distance += graph.GetEdgeWeight(current, start);
     ant.quantity_ += pheromone[current][start];
   }
 
@@ -289,8 +290,8 @@ TsmResult GraphAlgorithms::SolveTravelingSalesmanProblem(const Graph &graph) {
   best_result.distance = std::numeric_limits<double>::max();
   for (int iter = 0; iter < kNumIterations; iter++) {
 
-    std::vector<TsmResult> ants(kNumAnts);
-    std::vector<TsmResult> succededAnts;
+    std::vector<Ant> ants(kNumAnts);
+    std::vector<Ant> succededAnts;
 
     std::random_device rd;
     std::default_random_engine engine(rd());
@@ -302,11 +303,11 @@ TsmResult GraphAlgorithms::SolveTravelingSalesmanProblem(const Graph &graph) {
 
       std::vector<bool> visited(n, false);
       ants[k] = BuildTour(start, visited, pheromone, graph);
-      int size = ants[k].vertices.size();
+      int size = ants[k].antResult_.vertices.size();
       if (size == (n + 1)) {
         succededAnts.push_back(ants[k]);
-        if (ants[k].distance <= best_result.distance) {
-          best_result = ants[k];
+        if (ants[k].antResult_.distance <= best_result.distance) {
+          best_result = ants[k].antResult_;
         }
       }
     }

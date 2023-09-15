@@ -25,12 +25,11 @@ const int kInf = std::numeric_limits<int>::max();
 
 struct TsmResult {
   std::vector<int> vertices;
-  double distance = -1;
-  double quantity_;
+  double distance;
 };
 
 struct Ant {
-  TsmResult result;
+  TsmResult antResult_;
   double quantity_;
 };
 
@@ -59,13 +58,13 @@ private:
   static double Eta(int i, int j, const Graph &graph);
   static vector<vector<double>> InitializePheromone(int n);
   static void UpdatePheromone(vector<vector<double>> &pheromone,
-                              const vector<TsmResult> &ants,
+                              const vector<Ant> &ants,
                               const Graph &graph);
 
   static int SelectNext(const int current, const vector<bool> &visited,
                         const vector<vector<double>> &pheromone,
                         const Graph &graph);
-  static TsmResult BuildTour(int start, vector<bool> &visited,
+  static Ant BuildTour(int start, vector<bool> &visited,
                              const vector<vector<double>> &pheromone,
                              const Graph &graph);
 };
