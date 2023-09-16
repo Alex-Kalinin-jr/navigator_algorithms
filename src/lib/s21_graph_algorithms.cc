@@ -12,7 +12,7 @@ namespace s21 {
 
 vector<int> GraphAlgorithms::DepthFirstSearch(const Graph &graph,
                                               const int start_vertex) {
-  if (start_vertex >= graph.Size()) {
+  if (start_vertex >= graph.Size() || start_vertex < 0) {
     throw "invalid argument";
   }
   vector<bool> visited(graph.Size(), false);
@@ -46,7 +46,7 @@ vector<int> GraphAlgorithms::DepthFirstSearch(const Graph &graph,
 }
 
 vector<int> GraphAlgorithms::BreadthFirstSearch(const Graph &graph, int start) {
-  if (start >= graph.Size()) {
+  if (start >= graph.Size() || start < 0) {
     throw "invalid argument";
   }
   vector<bool> visited(graph.Size(), false);
