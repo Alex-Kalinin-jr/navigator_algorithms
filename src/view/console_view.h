@@ -14,9 +14,9 @@ class ConsoleView {
   // interactions with user
   void StartEventLoop() const;
   void DisplayMenu() const;
-  int GetUserChoice(const std::string) const;
-  std::string GetString(const std::string) const;
-  void ShowError(const std::string);
+  int GetUserChoice(const std::string &) const;
+  std::string GetString(const std::string &) const;
+  void ShowError(const std::string &);
 
   // actions after interaction
   void HandleTravelingSalesmanProblem(const TsmResult &) const;

@@ -30,7 +30,7 @@ struct TsmResult {
 
 struct Ant {
   TsmResult ant_result_;
-  double quantity_;
+  double quantity_ = 0;
 };
 
 class GraphAlgorithms {

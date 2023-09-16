@@ -11,6 +11,9 @@
 namespace s21 {
 
 int Graph::GetEdgeWeight(const int &i, const int &j) const {
+  if (i >= Size() && j >= Size()) {
+    throw "";
+  }
   return adjacency_matrix_[i][j];
 }
 

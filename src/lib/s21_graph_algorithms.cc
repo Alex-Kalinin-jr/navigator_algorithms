@@ -182,6 +182,9 @@ vector<vector<int>> GraphAlgorithms::GetLeastSpanningTree(const Graph &graph) {
 }
 
 vector<vector<double>> GraphAlgorithms::InitializePheromone(int n) {
+  if (n < 1) {
+    throw "";
+  }
   return vector<vector<double>>(n, vector<double>(n, kInitialPheromone));
 }
 
@@ -204,7 +207,7 @@ int GraphAlgorithms::SelectNext(const int current, const vector<bool> &visited,
   int size = visited.size();
   double sum = 0.0;
   for (int i = 0; i < size; ++i) {
-    if (!visited[i] && (graph.GetEdgeWeight(current, i) > 0)) {
+    if (visited[i] == false && (graph.GetEdgeWeight(current, i) > 0)) {
       sum += pow(pheromone[current][i], kAlpha) *
              pow(Eta(current, i, graph), kBeta);
     }
@@ -212,7 +215,7 @@ int GraphAlgorithms::SelectNext(const int current, const vector<bool> &visited,
 
   double buff_attractivness = 0.0;
   for (int i = 0; i < size; ++i) {
-    if (!visited[i] && (graph.GetEdgeWeight(current, i) > 0)) {
+    if (visited[i] == false && (graph.GetEdgeWeight(current, i) > 0)) {
       buff_attractivness = pow(pheromone[current][i], kAlpha) *
                            pow(Eta(current, i, graph), kBeta) / sum;
       if (buff_attractivness > answ_attractivness) {
@@ -253,7 +256,8 @@ Ant GraphAlgorithms::BuildTour(int start, vector<bool> &visited,
   int current = start;
   int size = visited.size();
   for (int i = 1; i < size; ++i) {
-    int next = SelectNext(current, visited, pheromone, graph);
+    int next = -1;
+    next = SelectNext(current, visited, pheromone, graph);
     if (next == -1) {
       break;
     }

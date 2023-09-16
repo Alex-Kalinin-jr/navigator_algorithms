@@ -1,17 +1,20 @@
 CC=g++
-CXXFLAGS=-c -std=c++17 -Werror -Wall -Wextra -Wpedantic -g -O0
+CXXFLAGS=-c -std=c++17 -Werror -Wall -Wextra -g
 LDFLAGS=-lgtest -pthread
 TESTSRC=tests.cc
 
 LIBSRC=lib/s21_graph.cc lib/s21_graph_algorithms.cc
 
 SRCFILES=main.cc view/console_view.cc controller/controller.cc
+HDRFILES=controller/controller.h lib/s21_graph.h lib/s21_graph_algorithms.h lib/s21_queue.h lib/s21_stack.h view/choice.h view/console_view.h
 SRCOBJ=$(SRCFILES:.cc=.o)
 TESTOBJ=$(TESTSRC:.cc=.o)
 LIBOBJ=$(LIBSRC:.cc=.o)
 LIBSTATIC=$(LIBSRC:.cc=.a)
 EXECUTABLE=SimpleNavigator
-EXECUTABLE_TEST=SimpleNavigatorTest
+EXECUTABLE_TEST=SimpleNavigator
+REPORTDIR=.
+LEAKS_REPORT_FILE=leaks_report.txt
 
 OPEN=xdg-open
 
@@ -47,4 +50,10 @@ dvi:
 
 style:
 	-@clang-format -i -style=file *.cc lib/*.cc lib/*.h
+	
+cppcheck:
+	cppcheck --language=c++ --std=c++17 --enable=all --suppress=unusedFunction \
+	--suppress=missingInclude --suppress=unusedStructMember $(SRCFILES) $(HDRFILES) main.cc
 
+leaks:
+	valgrind --leak-check=full --verbose --log-file=$(REPORTDIR)/$(LEAKS_REPORT_FILE) ./$(EXECUTABLE_TEST)
