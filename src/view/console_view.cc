@@ -41,7 +41,7 @@ void ConsoleView::DisplayMenu() const {
 }
 
 
-int ConsoleView::GetUserChoice(std::string message) const {
+int ConsoleView::GetUserChoice(const std::string message) const {
   std::cout << message <<std::endl;
   int choice = EXIT_C - 1;
   std::string buff_str;
@@ -53,7 +53,7 @@ int ConsoleView::GetUserChoice(std::string message) const {
 }
 
 
-std::string ConsoleView::GetString(std::string message) const {
+std::string ConsoleView::GetString(const std::string message) const {
   std::cin.clear();
   std::cout << message << std::endl;
   std::string filename;
@@ -61,11 +61,11 @@ std::string ConsoleView::GetString(std::string message) const {
   return filename;
 }
 
-void ConsoleView::ShowError(std::string error) {
+void ConsoleView::ShowError(const std::string error) {
   std::cout << error << std::endl;
 }
 
-void ConsoleView::HandleTravelingSalesmanProblem(TsmResult &tsm_result) const {
+void ConsoleView::HandleTravelingSalesmanProblem(const TsmResult &tsm_result) const {
     if (std::numeric_limits<double>::max() == tsm_result.distance) {
       std::cout << "path not found";
     } else {

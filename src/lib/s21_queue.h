@@ -17,7 +17,7 @@ public:
   explicit Queue(std::initializer_list<value_type> const &items)
       : cont_(Container(items)) {}
   Queue(const Queue &src) : cont_(src.cont_) {}
-  Queue(Queue &&src) { cont_ = std::move(src.cont_); }
+  Queue(Queue &&src) : cont_(std::move(src.cont_)) {}
   auto operator=(Queue &&src) {
     cont_ = std::move(src.cont_);
     return *this;

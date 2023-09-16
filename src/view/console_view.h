@@ -10,16 +10,16 @@ class Controller;
 
 class ConsoleView {
  public:
-  ConsoleView(Controller* c) : controller_(c){};
+  explicit ConsoleView(Controller* c) : controller_(c){};
   // interactions with user
   void StartEventLoop() const;
   void DisplayMenu() const;
-  int GetUserChoice(std::string) const;
-  std::string GetString(std::string) const;
-  void ShowError(std::string);
+  int GetUserChoice(const std::string) const;
+  std::string GetString(const std::string) const;
+  void ShowError(const std::string);
 
   // actions after interaction
-  void HandleTravelingSalesmanProblem(TsmResult &) const;
+  void HandleTravelingSalesmanProblem(const TsmResult &) const;
   void DisplayTraversal(const std::vector<int>& traversal) const;
   void DisplayShortestPath(const int& shortest_path) const;
   void DisplayShortestPaths(const Matrix& shortest_paths) const;

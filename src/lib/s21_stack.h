@@ -19,7 +19,7 @@ public:
       : cont_(Container(items)) {}
 
   Stack(const Stack &src) : cont_(src.cont_) {}
-  Stack(Stack &&src) { cont_ = std::move(src.cont_); }
+  Stack(Stack &&src) : cont_(std::move(src.cont_)) {}
   Stack &operator=(Stack &&src) {
     cont_ = std::move(src.cont_);
     return *this;
