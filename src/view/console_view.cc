@@ -2,25 +2,24 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <iostream>
 
 #include "choice.h"
 
 namespace s21 {
 
 void ConsoleView::StartEventLoop() const {
-  int choice = CHOICE_END;
+  int choice = EXIT_C - 1;
   while (true) {
     DisplayMenu();
-    std::cout << "choose mode: " << std::endl;
-    std::cin >> choice;
+    while (choice < EXIT_C || choice >= CHOICE_END) {
+      choice = GetUserChoice("Choose mod");
+    }
     if (choice == EXIT_C) {
       break;
     }
-    if (choice >= CHOICE_END && choice < EXIT_C) {
-      std::cout << "Invalid choice. Please try again." << std::endl;
-      continue;
-    }
     controller_->ReceiveSignal(choice);
+    choice = EXIT_C - 1;
   }
 }
 
@@ -44,9 +43,12 @@ void ConsoleView::DisplayMenu() const {
 
 int ConsoleView::GetUserChoice(std::string message) const {
   std::cout << message <<std::endl;
-  int choice;
-  std::cin.clear();
-  std::cin >> choice;
+  int choice = EXIT_C - 1;
+  std::string buff_str;
+  std::getline(std::cin, buff_str);
+  while (sscanf(buff_str.c_str(), "%d", &choice) != 1) {
+    std::getline(std::cin, buff_str);
+  }
   return choice;
 }
 

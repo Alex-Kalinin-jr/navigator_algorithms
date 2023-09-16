@@ -15,6 +15,7 @@ void Controller::SetView(ConsoleView *view) {
 }
 
 void Controller::ReceiveSignal(int choice) {
+  static_assert(CHOICE_END == 8, "not all the cases:check choice.h");
   switch ((Choice)choice) {
         case LOAD_GRAPH_C: {
           LoadGraphFromFile();

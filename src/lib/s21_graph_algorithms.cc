@@ -274,6 +274,9 @@ Ant GraphAlgorithms::BuildTour(int start, vector<bool> &visited,
 }
 
 TsmResult GraphAlgorithms::SolveTravelingSalesmanProblem(const Graph &graph) {
+  if (graph.Size() == 0) {
+    throw "";
+  }
   int n = graph.Size();
   vector<vector<double>> pheromone = InitializePheromone(n);
   TsmResult best_result;
