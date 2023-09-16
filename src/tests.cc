@@ -96,8 +96,6 @@ TEST(stack, create) {
   d = c;
   s21::Stack<int> e = s21::Stack<int>({1, 3, -5});
   a = s21::Stack<int>(b);
-  s21::Stack<int> f(s21::Stack<int>({1, 2, 3}));
-  s21::Stack<int> g(s21::Stack<int>(b));
 }
 
 TEST(stack, operations) {
@@ -142,8 +140,6 @@ TEST(queue, create) {
   d = c;
   s21::Queue<int> e = s21::Queue<int>({1, 3, -5});
   a = s21::Queue<int>(b);
-  s21::Queue<int> f(s21::Queue<int>({1, 2, 3}));
-  s21::Queue<int> g(s21::Queue<int>(b));
 }
 
 TEST(queue, operations) {
