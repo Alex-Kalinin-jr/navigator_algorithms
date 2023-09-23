@@ -1,0 +1,1 @@
+Simple cmd application for work with popular graph algorithms.
