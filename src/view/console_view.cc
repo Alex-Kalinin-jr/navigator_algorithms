@@ -97,9 +97,9 @@ void ConsoleView::DisplayShortestPath(const int& shortest_path) const {
 void ConsoleView::DisplayShortestPaths(
     const vector<vector<int>>& shortest_paths) const {
   for (const auto& path : shortest_paths) {
-    std::cout << "Path from vertex " << path[0] << ":" << std::endl;
+    std::cout << "Path from vertex " << path.at(0) << ":" << std::endl;
     for (size_t i = 1; i < path.size(); ++i) {
-      std::cout << path[i] << " ";
+      std::cout << path.at(i) << " ";
     }
     std::cout << std::endl;
   }
@@ -109,9 +109,9 @@ void ConsoleView::DisplayLeastSpanningTree(const Matrix& tree) const {
   std::cout << "The least spanning tree is:\n";
   for (int i = 0; i < static_cast<int>(tree.size()); ++i) {
     for (int j = i; j < static_cast<int>(tree.size()); ++j) {
-      if (tree[i][j] > 0) {
+      if (tree.at(i).at(j) > 0) {
         std::cout << i + 1 << " - " << j + 1 << " (" 
-                  << tree[i][j] << ")" << std::endl;
+                  << tree.at(i).at(j) << ")" << std::endl;
       }
     }
   }

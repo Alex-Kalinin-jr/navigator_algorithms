@@ -14,7 +14,7 @@ int Graph::GetEdgeWeight(const int &i, const int &j) const {
   if (i >= Size() && j >= Size()) {
     throw "";
   }
-  return adjacency_matrix_[i][j];
+  return adjacency_matrix_.at(i).at(j);
 }
 
 int Graph::Size() const { return static_cast<int>(adjacency_matrix_.size()); }
@@ -22,7 +22,7 @@ int Graph::Size() const { return static_cast<int>(adjacency_matrix_.size()); }
 bool Graph::IsDirected() const {
   for (int i = 0; i < Size(); ++i) {
     for (int j = i + 1; j < Size(); ++j) {
-      if (adjacency_matrix_[i][j] != adjacency_matrix_[j][i]) {
+      if (adjacency_matrix_.at(i).at(j) != adjacency_matrix_.at(j).at(i)) {
         return true;
       }
     }
@@ -33,7 +33,7 @@ bool Graph::IsDirected() const {
 vector<int> Graph::Neighbors(const int &vertex) const {
   vector<int> result;
   for (int i = 0; i < Size(); ++i) {
-    if (adjacency_matrix_[vertex][i] > 0) {
+    if (adjacency_matrix_.at(vertex).at(i) > 0) {
       result.push_back(i);
     }
   }
@@ -43,7 +43,7 @@ vector<int> Graph::Neighbors(const int &vertex) const {
 vector<int> Graph::NeighborsFromEnd(const int &vertex) const {
   vector<int> result;
   for (int i = Size() - 1; i >= 0; --i) {
-    if (adjacency_matrix_[vertex][i] > 0) {
+    if (adjacency_matrix_.at(vertex).at(i) > 0) {
       result.push_back(i);
     }
   }
@@ -116,7 +116,7 @@ void Graph::Export(std::ofstream &file, const bool state) const {
   file << "digraph MyGraph {" << std::endl;
   for (int i = 0; i < Size(); ++i) {
     for (int j = 0; j < Size(); ++j) {
-      if (adjacency_matrix_[i][j] > 0) {
+      if (adjacency_matrix_.at(i).at(j) > 0) {
         file << "  " << i << link << j;
         ExportEdgeWeight(file, i, j);
       }
@@ -127,9 +127,9 @@ void Graph::Export(std::ofstream &file, const bool state) const {
 
 void Graph::ExportEdgeWeight(std::ofstream &file, const int &i,
                              const int &j) const {
-  if (adjacency_matrix_[i][j] > 0) {
-    file << " [label=" << adjacency_matrix_[i][j]
-         << "; weight=" << adjacency_matrix_[i][j] << ";]";
+  if (adjacency_matrix_.at(i).at(j) > 0) {
+    file << " .at(label=" << adjacency_matrix_.at(i).at(j)
+         << "; weight=" << adjacency_matrix_.at(i).at(j) << ";)";
   }
   file << ";" << std::endl;
 }
@@ -137,7 +137,7 @@ void Graph::ExportEdgeWeight(std::ofstream &file, const int &i,
 void Graph::PrintMatrix() const {
   for (int i = 0; i < Size(); ++i) {
     for (int j = 0; j < Size(); ++j) {
-      std::cout << adjacency_matrix_[i][j] << " ";
+      std::cout << adjacency_matrix_.at(i).at(j) << " ";
     }
     std::cout << std::endl;
   }

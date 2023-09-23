@@ -25,12 +25,12 @@ vector<int> GraphAlgorithms::DepthFirstSearch(const Graph &graph,
     int vertex = vertex_stack.top();
     vertex_stack.pop();
 
-    if (!visited[vertex]) {
-      visited[vertex] = true;
+    if (!visited.at(vertex)) {
+      visited.at(vertex) = true;
       traversed.push_back(vertex);
 
       for (int neighbor : graph.NeighborsFromEnd(vertex)) {
-        if (!visited[neighbor]) {
+        if (!visited.at(neighbor)) {
           vertex_stack.push(neighbor);
         }
       }
@@ -59,12 +59,12 @@ vector<int> GraphAlgorithms::BreadthFirstSearch(const Graph &graph, int start) {
     int vertex = vertex_queue.front();
     vertex_queue.pop();
 
-    if (!visited[vertex]) {
-      visited[vertex] = true;
+    if (!visited.at(vertex)) {
+      visited.at(vertex) = true;
       traversed.push_back(vertex);
 
       for (int neighbor : graph.Neighbors(vertex)) {
-        if (!visited[neighbor]) {
+        if (!visited.at(neighbor)) {
           vertex_queue.push(neighbor);
         }
       }
@@ -89,27 +89,27 @@ int GraphAlgorithms::GetShortestPathBetweenVertices(const Graph &graph,
   vector<bool> visited(graph.Size(), false);
   Queue<int> vertex_queue;
 
-  distance[vertex1 - 1] = 0;
+  distance.at(vertex1 - 1) = 0;
   vertex_queue.push(vertex1 - 1);
 
   while (!vertex_queue.empty()) {
     int i = vertex_queue.front();
     vertex_queue.pop();
 
-    if (visited[i]) {
+    if (visited.at(i)) {
       continue;
     }
-    visited[i] = true;
+    visited.at(i) = true;
 
     for (int j : graph.Neighbors(i)) {
-      int new_distance = distance[i] + graph.GetEdgeWeight(i, j);
-      if (new_distance < distance[j]) {
-        distance[j] = new_distance;
+      int new_distance = distance.at(i) + graph.GetEdgeWeight(i, j);
+      if (new_distance < distance.at(j)) {
+        distance.at(j) = new_distance;
         vertex_queue.push(j);
       }
     }
   }
-  return distance[vertex2 - 1];
+  return distance.at(vertex2 - 1);
 }
 
 vector<vector<int>>
@@ -120,7 +120,7 @@ GraphAlgorithms::GetShortestPathsBetweenAllVertices(const Graph &graph) {
   for (int i = 0; i < count; ++i) {
     for (int j = 0; j < count; ++j) {
       if (graph.GetEdgeWeight(i, j) > 0) {
-        distances[i][j] = graph.GetEdgeWeight(i, j);
+        distances.at(i).at(j) = graph.GetEdgeWeight(i, j);
       }
     }
   }
@@ -128,9 +128,9 @@ GraphAlgorithms::GetShortestPathsBetweenAllVertices(const Graph &graph) {
   for (int k = 0; k < count; ++k) {
     for (int i = 0; i < count; ++i) {
       for (int j = 0; j < count; ++j) {
-        if (distances[i][k] != kInf && distances[k][j] != kInf) {
-          distances[i][j] =
-              std::min(distances[i][j], distances[i][k] + distances[k][j]);
+        if (distances.at(i).at(k) != kInf && distances.at(k).at(j) != kInf) {
+          distances.at(i).at(j) =
+              std::min(distances.at(i).at(j), distances.at(i).at(k) + distances.at(k).at(j));
         }
       }
     }
@@ -147,33 +147,33 @@ vector<vector<int>> GraphAlgorithms::GetLeastSpanningTree(const Graph &graph) {
 
   vector<vector<int>> spanning_tree(size, vector<int>(size, 0));
 
-  distances[0] = 0;
+  distances.at(0) = 0;
 
   for (int i = 0; i < size - 1; ++i) {
     int min_distance = kInf;
     int min_vertex = -1;
 
     for (int j = 0; j < size; ++j) {
-      if (!visited[j] && distances[j] < min_distance) {
-        min_distance = distances[j];
+      if (!visited.at(j) && distances.at(j) < min_distance) {
+        min_distance = distances.at(j);
         min_vertex = j;
       }
     }
 
-    visited[min_vertex] = true;
+    visited.at(min_vertex) = true;
 
-    if (parents[min_vertex] != -1) {
-      spanning_tree[parents[min_vertex]][min_vertex] =
-          graph.GetEdgeWeight(parents[min_vertex], min_vertex);
-      spanning_tree[min_vertex][parents[min_vertex]] =
-          graph.GetEdgeWeight(parents[min_vertex], min_vertex);
+    if (parents.at(min_vertex) != -1) {
+      spanning_tree.at(parents.at(min_vertex)).at(min_vertex) =
+          graph.GetEdgeWeight(parents.at(min_vertex), min_vertex);
+      spanning_tree.at(min_vertex).at(parents.at(min_vertex)) =
+          graph.GetEdgeWeight(parents.at(min_vertex), min_vertex);
     }
 
     for (int j = 0; j < size; ++j) {
-      if (!visited[j] && graph.GetEdgeWeight(min_vertex, j) > 0 &&
-          graph.GetEdgeWeight(min_vertex, j) < distances[j]) {
-        parents[j] = min_vertex;
-        distances[j] = graph.GetEdgeWeight(min_vertex, j);
+      if (!visited.at(j) && graph.GetEdgeWeight(min_vertex, j) > 0 &&
+          graph.GetEdgeWeight(min_vertex, j) < distances.at(j)) {
+        parents.at(j) = min_vertex;
+        distances.at(j) = graph.GetEdgeWeight(min_vertex, j);
       }
     }
   }
@@ -207,16 +207,16 @@ int GraphAlgorithms::SelectNext(const int current, const vector<bool> &visited,
   int size = visited.size();
   double sum = 0.0;
   for (int i = 0; i < size; ++i) {
-    if (visited[i] == false && (graph.GetEdgeWeight(current, i) > 0)) {
-      sum += pow(pheromone[current][i], kAlpha) *
+    if (visited.at(i) == false && (graph.GetEdgeWeight(current, i) > 0)) {
+      sum += pow(pheromone.at(current).at(i), kAlpha) *
              pow(Eta(current, i, graph), kBeta);
     }
   }
 
   double buff_attractivness = 0.0;
   for (int i = 0; i < size; ++i) {
-    if (visited[i] == false && (graph.GetEdgeWeight(current, i) > 0)) {
-      buff_attractivness = pow(pheromone[current][i], kAlpha) *
+    if (visited.at(i) == false && (graph.GetEdgeWeight(current, i) > 0)) {
+      buff_attractivness = pow(pheromone.at(current).at(i), kAlpha) *
                            pow(Eta(current, i, graph), kBeta) / sum;
       if (buff_attractivness > answ_attractivness) {
         answ = i;
@@ -241,7 +241,7 @@ void GraphAlgorithms::UpdatePheromone(vector<vector<double>> &pheromone,
          itr != ant.ant_result_.vertices.end() - 1; ++itr) {
       int start = *itr;
       int end = *(itr + 1);
-      pheromone[start][end] += ant.quantity_ / graph.GetEdgeWeight(start, end);
+      pheromone.at(start).at(end) += ant.quantity_ / graph.GetEdgeWeight(start, end);
     }
   }
 }
@@ -252,7 +252,7 @@ Ant GraphAlgorithms::BuildTour(int start, vector<bool> &visited,
   Ant ant;
   ant.ant_result_.vertices.push_back(start);
   ant.ant_result_.distance = 0.0;
-  visited[start] = true;
+  visited.at(start) = true;
   int current = start;
   int size = visited.size();
   for (int i = 1; i < size; ++i) {
@@ -263,15 +263,15 @@ Ant GraphAlgorithms::BuildTour(int start, vector<bool> &visited,
     }
     ant.ant_result_.vertices.push_back(next);
     ant.ant_result_.distance += graph.GetEdgeWeight(current, next);
-    ant.quantity_ += pheromone[current][next];
-    visited[next] = true;
+    ant.quantity_ += pheromone.at(current).at(next);
+    visited.at(next) = true;
     current = next;
   }
 
   if (graph.GetEdgeWeight(current, start) > 0) {
     ant.ant_result_.vertices.push_back(start);
     ant.ant_result_.distance += graph.GetEdgeWeight(current, start);
-    ant.quantity_ += pheromone[current][start];
+    ant.quantity_ += pheromone.at(current).at(start);
   }
 
   return ant;
@@ -298,12 +298,12 @@ TsmResult GraphAlgorithms::SolveTravelingSalesmanProblem(const Graph &graph) {
       int start = gen();
 
       std::vector<bool> visited(n, false);
-      ants[k] = BuildTour(start, visited, pheromone, graph);
-      int size = ants[k].ant_result_.vertices.size();
+      ants.at(k) = BuildTour(start, visited, pheromone, graph);
+      int size = ants.at(k).ant_result_.vertices.size();
       if (size == (n + 1)) {
-        succeded_ants.push_back(ants[k]);
-        if (ants[k].ant_result_.distance <= best_result.distance) {
-          best_result = ants[k].ant_result_;
+        succeded_ants.push_back(ants.at(k));
+        if (ants.at(k).ant_result_.distance <= best_result.distance) {
+          best_result = ants.at(k).ant_result_;
         }
       }
     }
